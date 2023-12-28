@@ -1,41 +1,37 @@
 {
 	"schemaVersion": 1,
-	"id": "modid",
+	"id": "sculkinfection",
 	"version": "${version}",
-	"name": "Example mod",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "Sculk Infection",
+	"description": "A mod which makes Sculk more, lets say, invasive",
 	"authors": [
-		"Me!"
+		"Clomclem"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
-	"license": "CC0-1.0",
-	"icon": "assets/modid/icon.png",
+	"license": "MIT",
+	"icon": "assets/sculkinfection/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.example.ExampleMod"
-		],
-		"client": [
-			"com.example.ExampleModClient"
+			"me.clomclem.sculkinfection.SculkInfection"
 		]
 	},
 	"mixins": [
-		"modid.mixins.json",
-		{
-			"config": "modid.client.mixins.json",
-			"environment": "client"
-		}
+		"sculkinfection.mixins.json"
 	],
+	"accessWidener" : "sculkinfection.accesswidener",
 	"depends": {
 		"fabricloader": ">=0.15.0",
 		"minecraft": "~1.20.4",
 		"java": ">=17",
 		"fabric-api": "*"
 	},
-	"suggests": {
-		"another-mod": "*"
+	"custom": {
+		"loom:injected_interfaces": {
+			"net/minecraft/class_7128": ["me/clomclem/sculkinfection/accessor/ISculkSpreadManagerAccessor"]
+		}
 	}
 }
