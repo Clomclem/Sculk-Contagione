@@ -36,6 +36,8 @@ public abstract class SculkVeinBlockMixin extends MultifaceGrowthBlock implement
         SculkBlockEntity blockEntity = ((SculkBlockEntity) world.getBlockEntity(blockPos.get()));
         blockEntity.setPreviousBlock(block.get());
         blockEntity.setCatalystPos(spreadManager.getCatalystPos());
+        spreadManager.setBlockAmount(spreadManager.getBlockAmount()+1);
+        blockEntity.setBlockAmount(spreadManager.getBlockAmount());
     }
 
     @Redirect(method = "*",

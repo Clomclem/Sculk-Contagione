@@ -18,6 +18,9 @@ public abstract class SculkSpreadManagerMixin implements ISculkSpreadManagerAcce
     @Unique
     private BlockPos catalystPos;
 
+    @Unique
+    private int blockAmount = 0;
+
     @Nullable
     @Override
     public BlockPos getCatalystPos() {
@@ -29,11 +32,22 @@ public abstract class SculkSpreadManagerMixin implements ISculkSpreadManagerAcce
         this.catalystPos = catalystPos;
     }
 
+    @Override
+    public int getBlockAmount() {
+        return blockAmount;
+    }
+
+    @Override
+    public void setBlockAmount(int blockAmount) {
+        this.blockAmount = blockAmount;
+    }
+
     @Inject(method = "writeNbt", at = @At("HEAD"))
     private void onWriteNbt(NbtCompound nbt, CallbackInfo ci) {
         if (catalystPos != null) {
             nbt.putIntArray("catalyst_pos", List.of(catalystPos.getX(), catalystPos.getY(), catalystPos.getZ()));
         }
+        nbt.putInt("block_amount", blockAmount);
     }
 
     @Inject(method = "readNbt", at = @At("TAIL"))
@@ -42,5 +56,6 @@ public abstract class SculkSpreadManagerMixin implements ISculkSpreadManagerAcce
             int[] pos = nbt.getIntArray("catalyst_pos");
             catalystPos = new BlockPos(pos[0], pos[1], pos[2]);
         }
+        blockAmount = nbt.getInt("block_amount");
     }
 }

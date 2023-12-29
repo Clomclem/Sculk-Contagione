@@ -1,14 +1,16 @@
 {
-	"required": true,
-	"package": "me.clomclem.sculkinfection.mixin",
-	"compatibilityLevel": "JAVA_17",
-	"mixins": [
-		"SculkBlockMixin",
-		"SculkCatalystBlockEntityMixin",
-		"SculkSpreadManagerMixin",
-		"SculkVeinBlockMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
+  "required": true,
+  "package": "me.clomclem.sculkinfection.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "ItemEntityMixin",
+    "SculkBlockMixin",
+    "SculkCatalystBlockEntity$ListenerMixin",
+    "SculkCatalystBlockEntityMixin",
+    "SculkSpreadManagerMixin",
+    "SculkVeinBlockMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
 	}
 }
