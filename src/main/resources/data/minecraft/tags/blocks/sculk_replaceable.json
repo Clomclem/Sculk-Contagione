@@ -1,0 +1,23 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:leaves",
+    "#minecraft:nylium",
+    "#minecraft:logs",
+    "#minecraft:base_stone_nether",
+    "#minecraft:redstone_ores",
+    "#minecraft:coal_ores",
+    "#minecraft:copper_ores",
+    "#minecraft:emerald_ores",
+    "#minecraft:diamond_ores",
+    "#minecraft:gold_ores",
+    "#minecraft:iron_ores",
+    "#minecraft:lapis_ores",
+    "#minecraft:planks",
+    "#minecraft:ice",
+    "#minecraft:sand",
+    "#minecraft:snow",
+    "minecraft:farmland",
+    "minecraft:dirt_path"
+  ]
+}
