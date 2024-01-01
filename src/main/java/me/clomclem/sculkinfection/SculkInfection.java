@@ -3,7 +3,10 @@ package me.clomclem.sculkinfection;
 import me.clomclem.sculkinfection.block.entity.SculkBlockEntity;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
+import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.damage.DamageSource;
@@ -12,8 +15,10 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +33,10 @@ public class SculkInfection implements ModInitializer {
 	public static BlockEntityType<SculkBlockEntity> SCULK_BLOCK_ENTITY;
 
 	public static final RegistryKey<DamageType> SCULK_ATTRITION = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(ID, "sculk_attrition"));
+
+	public static final TagKey<Block> NON_SCULK_REPLACEABLE = TagKey.of(RegistryKeys.BLOCK, new Identifier(ID, "non_sculk_replaceable"));
+
+	public static final GameRules.Key<GameRules.BooleanRule> EVERYTHING_TURNS_INTO_SCULK = GameRuleRegistry.register("everythingTurnsIntoSculk", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true));;
 
 	public static List<BlockPos> getNeighbors(BlockPos pos)
 	{

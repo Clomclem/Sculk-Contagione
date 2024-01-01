@@ -13,10 +13,10 @@
     "#minecraft:gold_ores",
     "#minecraft:iron_ores",
     "#minecraft:lapis_ores",
-    "#minecraft:planks",
     "#minecraft:ice",
     "#minecraft:sand",
     "#minecraft:snow",
+    "#minecraft:flowers",
     "minecraft:farmland",
     "minecraft:dirt_path"
   ]
