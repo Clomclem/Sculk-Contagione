@@ -91,44 +91,4 @@ public abstract class SculkBlockMixin extends ExperienceDroppingBlock implements
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return BlockWithEntity.validateTicker(type, SculkInfection.SCULK_BLOCK_ENTITY, SculkBlockEntity::tick);
     }
-
-    @Override
-    public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
-        super.onSteppedOn(world, pos, state, entity);
-
-        if (entity instanceof LivingEntity livingEntity && world.getBlockState(pos).getBlock() == Blocks.SCULK && livingEntity.getType() != EntityType.WARDEN) {
-            if (livingEntity instanceof PlayerEntity player && (player.isCreative() || player.isSpectator())) {
-                return;
-            }
-
-            boolean hasBoots = false;
-
-            for (ItemStack itemstack : livingEntity.getArmorItems()) {
-                if (itemstack.getItem() instanceof ArmorItem armorItem && armorItem.getType() == ArmorItem.Type.BOOTS) {
-                    hasBoots = true;
-                }
-            }
-
-            if (!hasBoots) {
-                livingEntity.damage(of(world, SculkInfection.SCULK_ATTRITION), 0.5f);
-                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 40, 1, false, false));
-                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 40, 0, false, false));
-                world.playSound(livingEntity instanceof PlayerEntity player ? player : null, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), SoundEvents.BLOCK_SCULK_BREAK, SoundCategory.NEUTRAL, 1.0f, 1.0f);
-                for (int i = 0; i < 20; i++) {
-                    world.addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, new ItemStack(Blocks.SCULK)), livingEntity.getX() + world.random.nextGaussian() / 5f, livingEntity.getY() + world.random.nextGaussian() / 5f, livingEntity.getZ() + world.random.nextGaussian() / 5f, world.random.nextGaussian() / 9f, world.random.nextFloat() / 4f, world.random.nextGaussian() / 9f);
-                }
-            }
-
-            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 40, 1, false, false));
-            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.MINING_FATIGUE, 40, 2, false, false));
-        }
-
-        if (entity instanceof ItemEntity itemEntity && world.getBlockState(pos).getBlock() == Blocks.SCULK) {
-            itemEntity.setItemAge(MathHelper.clamp(itemEntity.getItemAge(), 5900, 6000));
-            world.playSound(itemEntity.getOwner() instanceof PlayerEntity player ? player : null, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), SoundEvents.BLOCK_SCULK_BREAK, SoundCategory.NEUTRAL, 1.0f, 1.0f);
-            for (int i = 0; i < 10; i++) {
-                world.addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, new ItemStack(Blocks.SCULK)), entity.getX() + world.random.nextGaussian() / 10f, entity.getY() + world.random.nextGaussian() / 10f, entity.getZ() + world.random.nextGaussian() / 10f, world.random.nextGaussian() / 10f, world.random.nextFloat() / 5f, world.random.nextGaussian() / 10f);
-            }
-        }
-    }
 }

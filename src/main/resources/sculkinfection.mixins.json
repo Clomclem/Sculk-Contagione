@@ -3,6 +3,7 @@
   "package": "me.clomclem.sculkinfection.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "BlockMixin",
     "ItemEntityMixin",
     "SculkBlockMixin",
     "SculkCatalystBlockEntity$ListenerMixin",

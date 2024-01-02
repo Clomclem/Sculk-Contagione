@@ -38,6 +38,8 @@ public class SculkInfection implements ModInitializer {
 
 	public static final TagKey<Block> NON_SCULK_REPLACEABLE = TagKey.of(RegistryKeys.BLOCK, new Identifier(ID, "non_sculk_replaceable"));
 
+	public static final TagKey<Block> SCULK = TagKey.of(RegistryKeys.BLOCK, new Identifier(ID, "sculk"));
+
 	public static final GameRules.Key<GameRules.BooleanRule> EVERYTHING_TURNS_INTO_SCULK = GameRuleRegistry.register("everythingTurnsIntoSculk", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(false));
 
 	public static final GameRules.Key<GameRules.BooleanRule> SCULK_SPREAD_SPAWN_WARDEN = GameRuleRegistry.register("sculkSpreadSpawnWarden", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true));
