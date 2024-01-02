@@ -8,5 +8,5 @@
   "gamerule.sculkCatalystSpreadAmount": "Sculk catalyst spread amount",
   "gamerule.sculkCatalystSpreadAmount.description": "The amount of growth (in xp) which the Sculk Catalyst gains when spreading on its own.",
 
-  "effect.sculkinfection.sculk_spores": "Sculk Spores"
+  "effect.sculkcontagione.sculk_spores": "Sculk Spores"
 }
