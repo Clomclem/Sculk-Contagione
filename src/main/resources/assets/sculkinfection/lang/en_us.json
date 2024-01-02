@@ -1,0 +1,12 @@
+{
+  "gamerule.everythingTurnsIntoSculk": "Everything turns into Sculk",
+  "gamerule.everythingTurnsIntoSculk.description": "Whether to turn all blocks, not just natural ones, into Sculk, when a Sculk Catalyst spreads Sculk.",
+  "gamerule.sculkSpreadSpawnWarden": "Sculk can spawn Wardens when spreading",
+  "gamerule.sculkSpreadSpawnWarden.description": "Whether Sculk Shriekers generated artificially by a Sculk Catalyst can summon the Warden.",
+  "gamerule.sculkCatalystSpreadTickdelay": "Sculk catalyst spread delay",
+  "gamerule.sculkCatalystSpreadTickdelay.description": "The delay (in ticks) it takes for a Sculk Catalyst to spread Sculk.",
+  "gamerule.sculkCatalystSpreadAmount": "Sculk catalyst spread amount",
+  "gamerule.sculkCatalystSpreadAmount.description": "The amount of growth (in xp) which the Sculk Catalyst gains when spreading on its own.",
+
+  "effect.sculkinfection.sculk_spores": "Sculk Spores"
+}

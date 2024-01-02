@@ -5,27 +5,14 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import me.clomclem.sculkinfection.SculkInfection;
 import me.clomclem.sculkinfection.block.entity.SculkBlockEntity;
+import me.clomclem.sculkinfection.world.SculkInfectionGamerules;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.SculkSpreadManager;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particle.ItemStackParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.screen.NamedScreenHandlerFactory;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.intprovider.IntProvider;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
@@ -56,7 +43,7 @@ public abstract class SculkBlockMixin extends ExperienceDroppingBlock implements
     @WrapOperation(method = "spread",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/block/entity/SculkSpreadManager;isWorldGen()Z"))
     private boolean enableAlwaysSpawnWarden(SculkSpreadManager instance, Operation<Boolean> original, SculkSpreadManager.Cursor cursor, WorldAccess world, BlockPos catalystPos, Random random, SculkSpreadManager spreadManager, boolean shouldConvertToBlock) {
-        if (((World)world).getGameRules().getBoolean(SculkInfection.SCULK_SPREAD_SPAWN_WARDEN)) {
+        if (((World)world).getGameRules().getBoolean(SculkInfectionGamerules.SCULK_SPREAD_SPAWN_WARDEN)) {
             return true;
         } else {
             return original.call(instance);
