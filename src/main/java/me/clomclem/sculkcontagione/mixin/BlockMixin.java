@@ -14,6 +14,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ItemStackParticleEffect;
@@ -71,6 +72,9 @@ public abstract class BlockMixin extends AbstractBlock implements ItemConvertibl
             }
 
             if (entity instanceof ItemEntity itemEntity) {
+                if (itemEntity.getStack().getItem() instanceof BlockItem blockItem && blockItem.getBlock().getRegistryEntry().isIn(SculkContagione.SCULK)) {
+                    return;
+                }
                 itemEntity.setItemAge(MathHelper.clamp(itemEntity.getItemAge(), 5900, 6000));
                 world.playSound(itemEntity.getOwner() instanceof PlayerEntity player ? player : null, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), SoundEvents.BLOCK_SCULK_BREAK, SoundCategory.NEUTRAL, 1.0f, 1.0f);
                 for (int i = 0; i < 10; i++) {
