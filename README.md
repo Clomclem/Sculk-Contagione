@@ -1,5 +1,7 @@
 # Sculk Contagione
 
+[![Requires Fabric API](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3.1.2/assets/cozy/requires/fabric-api_64h.png)](https://modrinth.com/mod/fabric-api)
+
 A mod that makes Sculk more, lets say, invasive.
 
 This mod was inspired by Sculkhunt & Sculk Horde, and aims to make a vanilla-esque infection mod.
