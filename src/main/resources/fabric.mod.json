@@ -9,7 +9,7 @@
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/Clomclem/Sculk-Contagione"
 	},
 	"license": "MIT",
 	"icon": "assets/sculkcontagione/textures/mob_effect/sculk_spores.png",
