@@ -26,7 +26,7 @@ public abstract class SculkCatalystBlockEntity$ListenerMixin {
         if (event == GameEvent.STEP) {
             Entity i = emitter.sourceEntity();
             if (i instanceof LivingEntity livingEntity) {
-                if (world.getRandom().nextInt(200) == 0) {
+                if (world.getRandom().nextInt(200) == 0 && !livingEntity.hasStatusEffect(SculkInfection.SCULK_SPORES)) {
                     livingEntity.addStatusEffect(new StatusEffectInstance(SculkInfection.SCULK_SPORES, 12000));
                 }
 

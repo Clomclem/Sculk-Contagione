@@ -12,6 +12,7 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemConvertible;
@@ -43,7 +44,7 @@ public abstract class BlockMixin extends AbstractBlock implements ItemConvertibl
     @Inject(method = "onSteppedOn", at = @At("TAIL"))
     private void whenSteppedOn(World world, BlockPos pos, BlockState state, Entity entity, CallbackInfo ci) {
         if (this.getRegistryEntry().isIn(SculkInfection.SCULK)) {
-            if (entity instanceof LivingEntity livingEntity && livingEntity.getType() != EntityType.WARDEN) {
+            if (entity instanceof LivingEntity livingEntity && !(livingEntity instanceof WardenEntity)) {
                 if (livingEntity instanceof PlayerEntity player && (player.isCreative() || player.isSpectator())) {
                     return;
                 }

@@ -1,3 +1,7 @@
 accessWidener v2 named
 
 accessible    method    net/minecraft/block/BlockWithEntity    validateTicker    (Lnet/minecraft/block/entity/BlockEntityType;Lnet/minecraft/block/entity/BlockEntityType;Lnet/minecraft/block/entity/BlockEntityTicker;)Lnet/minecraft/block/entity/BlockEntityTicker;
+
+accessible    method    net/minecraft/block/entity/SculkCatalystBlockEntity$Listener    bloom    (Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/random/Random;)V
+
+accessible    field    net/minecraft/block/entity/SculkCatalystBlockEntity$Listener    state    Lnet/minecraft/block/BlockState;
