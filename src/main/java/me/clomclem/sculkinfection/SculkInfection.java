@@ -1,6 +1,7 @@
 package me.clomclem.sculkinfection;
 
 import me.clomclem.sculkinfection.block.entity.SculkBlockEntity;
+import me.clomclem.sculkinfection.entity.effect.SculkSporesStatusEffect;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
@@ -11,6 +12,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageType;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -36,7 +38,11 @@ public class SculkInfection implements ModInitializer {
 
 	public static final TagKey<Block> NON_SCULK_REPLACEABLE = TagKey.of(RegistryKeys.BLOCK, new Identifier(ID, "non_sculk_replaceable"));
 
-	public static final GameRules.Key<GameRules.BooleanRule> EVERYTHING_TURNS_INTO_SCULK = GameRuleRegistry.register("everythingTurnsIntoSculk", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true));;
+	public static final GameRules.Key<GameRules.BooleanRule> EVERYTHING_TURNS_INTO_SCULK = GameRuleRegistry.register("everythingTurnsIntoSculk", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(false));
+
+	public static final GameRules.Key<GameRules.BooleanRule> SCULK_SPREAD_SPAWN_WARDEN = GameRuleRegistry.register("sculkSpreadSpawnWarden", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true));
+
+	public static final StatusEffect SCULK_SPORES = new SculkSporesStatusEffect();
 
 	public static List<BlockPos> getNeighbors(BlockPos pos)
 	{
@@ -76,5 +82,7 @@ public class SculkInfection implements ModInitializer {
 				new Identifier(ID, "sculk_block_entity"),
 				FabricBlockEntityTypeBuilder.create(SculkBlockEntity::new, Blocks.SCULK).build()
 		);
+
+		Registry.register(Registries.STATUS_EFFECT, new Identifier(ID, "sculk_spores"), SCULK_SPORES);
 	}
 }

@@ -15,7 +15,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SculkBlockEntity extends BlockEntity {
@@ -33,7 +32,7 @@ public class SculkBlockEntity extends BlockEntity {
     public static void tick(World world, BlockPos pos, BlockState state, SculkBlockEntity blockEntity) {
         if (blockEntity.previousBlock != null && blockEntity.catalystPos != null) {
             if (world.getBlockState(blockEntity.catalystPos).getBlock() != Blocks.SCULK_CATALYST) {
-                blockEntity.counter += 0.2f;
+                blockEntity.counter += 0.05f;
                 if (blockEntity.counter >= MathHelper.sqrt(blockEntity.blockAmount)) {
                     world.removeBlockEntity(pos);
                     world.setBlockState(pos, blockEntity.previousBlock.getDefaultState());

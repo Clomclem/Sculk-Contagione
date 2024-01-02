@@ -1,15 +1,17 @@
 package me.clomclem.sculkinfection.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import com.llamalad7.mixinextras.sugar.Local;
-import com.llamalad7.mixinextras.sugar.ref.LocalRef;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import me.clomclem.sculkinfection.SculkInfection;
 import me.clomclem.sculkinfection.block.entity.SculkBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.entity.SculkSpreadManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -44,10 +46,20 @@ public abstract class SculkBlockMixin extends ExperienceDroppingBlock implements
     @ModifyReturnValue(method = "getExtraBlockState",
             at = @At("RETURN"))
     private BlockState modifyExtraBlockstate(BlockState original, WorldAccess world, BlockPos pos, Random random, boolean allowShrieker) {
-        if (random.nextInt(31) == 0) {
+        if (random.nextInt(63) == 0) {
             return Blocks.SCULK_CATALYST.getDefaultState();
         } else {
             return original;
+        }
+    }
+
+    @WrapOperation(method = "spread",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/block/entity/SculkSpreadManager;isWorldGen()Z"))
+    private boolean enableAlwaysSpawnWarden(SculkSpreadManager instance, Operation<Boolean> original, SculkSpreadManager.Cursor cursor, WorldAccess world, BlockPos catalystPos, Random random, SculkSpreadManager spreadManager, boolean shouldConvertToBlock) {
+        if (((World)world).getGameRules().getBoolean(SculkInfection.SCULK_SPREAD_SPAWN_WARDEN)) {
+            return true;
+        } else {
+            return original.call(instance);
         }
     }
 
@@ -84,7 +96,7 @@ public abstract class SculkBlockMixin extends ExperienceDroppingBlock implements
     public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
         super.onSteppedOn(world, pos, state, entity);
 
-        if (entity instanceof LivingEntity livingEntity && world.getBlockState(pos).getBlock() == Blocks.SCULK) {
+        if (entity instanceof LivingEntity livingEntity && world.getBlockState(pos).getBlock() == Blocks.SCULK && livingEntity.getType() != EntityType.WARDEN) {
             if (livingEntity instanceof PlayerEntity player && (player.isCreative() || player.isSpectator())) {
                 return;
             }

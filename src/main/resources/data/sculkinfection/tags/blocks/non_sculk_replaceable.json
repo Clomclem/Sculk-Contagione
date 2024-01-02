@@ -1,10 +1,7 @@
 {
   "values": [
+    "#sculkinfection:sculk",
     "minecraft:air",
-    "minecraft:sculk_catalyst",
-    "minecraft:sculk_shrieker",
-    "minecraft:sculk_vein",
-    "minecraft:sculk",
     "minecraft:barrier",
     "minecraft:bedrock",
     "minecraft:end_portal",
