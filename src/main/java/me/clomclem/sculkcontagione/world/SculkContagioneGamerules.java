@@ -1,10 +1,10 @@
-package me.clomclem.sculkinfection.world;
+package me.clomclem.sculkcontagione.world;
 
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.minecraft.world.GameRules;
 
-public class SculkInfectionGamerules {
+public class SculkContagioneGamerules {
     public static final GameRules.Key<GameRules.BooleanRule> EVERYTHING_TURNS_INTO_SCULK = GameRuleRegistry.register("everythingTurnsIntoSculk", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(false));
 
     public static final GameRules.Key<GameRules.BooleanRule> SCULK_SPREAD_SPAWN_WARDEN = GameRuleRegistry.register("sculkSpreadSpawnWarden", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true));

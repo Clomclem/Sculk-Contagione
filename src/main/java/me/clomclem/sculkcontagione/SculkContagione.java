@@ -1,12 +1,10 @@
-package me.clomclem.sculkinfection;
+package me.clomclem.sculkcontagione;
 
-import me.clomclem.sculkinfection.block.entity.SculkBlockEntity;
-import me.clomclem.sculkinfection.entity.effect.SculkSporesStatusEffect;
-import me.clomclem.sculkinfection.world.SculkInfectionGamerules;
+import me.clomclem.sculkcontagione.block.entity.SculkBlockEntity;
+import me.clomclem.sculkcontagione.entity.effect.SculkSporesStatusEffect;
+import me.clomclem.sculkcontagione.world.SculkContagioneGamerules;
 import net.fabricmc.api.ModInitializer;
 
-import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
-import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -21,7 +19,6 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +26,8 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SculkInfection implements ModInitializer {
-	public static final String ID = "sculkinfection";
+public class SculkContagione implements ModInitializer {
+	public static final String ID = "sculkcontagione";
     public static final Logger LOGGER = LoggerFactory.getLogger(ID);
 
 	public static BlockEntityType<SculkBlockEntity> SCULK_BLOCK_ENTITY;
@@ -84,6 +81,6 @@ public class SculkInfection implements ModInitializer {
 
 		Registry.register(Registries.STATUS_EFFECT, new Identifier(ID, "sculk_spores"), SCULK_SPORES);
 
-		SculkInfectionGamerules.initialize();
+		SculkContagioneGamerules.initialize();
 	}
 }

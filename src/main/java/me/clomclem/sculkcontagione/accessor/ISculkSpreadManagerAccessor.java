@@ -1,4 +1,4 @@
-package me.clomclem.sculkinfection.accessor;
+package me.clomclem.sculkcontagione.accessor;
 
 import net.minecraft.util.math.BlockPos;
 

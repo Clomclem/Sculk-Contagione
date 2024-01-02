@@ -1,6 +1,6 @@
-package me.clomclem.sculkinfection.mixin;
+package me.clomclem.sculkcontagione.mixin;
 
-import me.clomclem.sculkinfection.world.SculkInfectionGamerules;
+import me.clomclem.sculkcontagione.world.SculkContagioneGamerules;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -34,8 +34,8 @@ public abstract class SculkCatalystBlockEntityMixin extends BlockEntity implemen
     @Inject(method = "tick", at = @At("HEAD"))
     private static void onTick(World world, BlockPos pos, BlockState state, SculkCatalystBlockEntity blockEntity, CallbackInfo ci) {
         Random rand = world.getRandom();
-        final int sculkCatalystSpreadTickdelay = world.getGameRules().getInt(SculkInfectionGamerules.SCULK_CATALYST_SPREAD_TICK_DELAY);
-        final int sculkCatalystSpreadAmount = world.getGameRules().getInt(SculkInfectionGamerules.SCULK_CATALYST_SPREAD_AMOUNT);
+        final int sculkCatalystSpreadTickdelay = world.getGameRules().getInt(SculkContagioneGamerules.SCULK_CATALYST_SPREAD_TICK_DELAY);
+        final int sculkCatalystSpreadAmount = world.getGameRules().getInt(SculkContagioneGamerules.SCULK_CATALYST_SPREAD_AMOUNT);
         if ((sculkCatalystSpreadTickdelay == 0 || rand.nextInt(sculkCatalystSpreadTickdelay) == 0) && sculkCatalystSpreadAmount != 0) {
             SculkCatalystBlockEntity.Listener listener = blockEntity.getEventListener();
             listener.getSpreadManager().spread(BlockPos.ofFloored(pos.add(rand.nextBetween(-3, 3), rand.nextBetween(-1, 1), rand.nextBetween(-3, 3)).toCenterPos()), sculkCatalystSpreadAmount);

@@ -1,11 +1,11 @@
-package me.clomclem.sculkinfection.mixin;
+package me.clomclem.sculkcontagione.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import me.clomclem.sculkinfection.SculkInfection;
-import me.clomclem.sculkinfection.block.entity.SculkBlockEntity;
-import me.clomclem.sculkinfection.world.SculkInfectionGamerules;
+import me.clomclem.sculkcontagione.SculkContagione;
+import me.clomclem.sculkcontagione.block.entity.SculkBlockEntity;
+import me.clomclem.sculkcontagione.world.SculkContagioneGamerules;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -20,8 +20,6 @@ import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-
-import static me.clomclem.sculkinfection.SculkInfection.of;
 
 @SuppressWarnings("deprecation")
 @Mixin(SculkBlock.class)
@@ -43,7 +41,7 @@ public abstract class SculkBlockMixin extends ExperienceDroppingBlock implements
     @WrapOperation(method = "spread",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/block/entity/SculkSpreadManager;isWorldGen()Z"))
     private boolean enableAlwaysSpawnWarden(SculkSpreadManager instance, Operation<Boolean> original, SculkSpreadManager.Cursor cursor, WorldAccess world, BlockPos catalystPos, Random random, SculkSpreadManager spreadManager, boolean shouldConvertToBlock) {
-        if (((World)world).getGameRules().getBoolean(SculkInfectionGamerules.SCULK_SPREAD_SPAWN_WARDEN)) {
+        if (((World)world).getGameRules().getBoolean(SculkContagioneGamerules.SCULK_SPREAD_SPAWN_WARDEN)) {
             return true;
         } else {
             return original.call(instance);
@@ -76,6 +74,6 @@ public abstract class SculkBlockMixin extends ExperienceDroppingBlock implements
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return BlockWithEntity.validateTicker(type, SculkInfection.SCULK_BLOCK_ENTITY, SculkBlockEntity::tick);
+        return BlockWithEntity.validateTicker(type, SculkContagione.SCULK_BLOCK_ENTITY, SculkBlockEntity::tick);
     }
 }

@@ -1,6 +1,6 @@
-package me.clomclem.sculkinfection.mixin;
+package me.clomclem.sculkcontagione.mixin;
 
-import me.clomclem.sculkinfection.accessor.IItemEntityAccessor;
+import me.clomclem.sculkcontagione.accessor.IItemEntityAccessor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;

@@ -1,7 +1,7 @@
-package me.clomclem.sculkinfection.mixin;
+package me.clomclem.sculkcontagione.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import me.clomclem.sculkinfection.SculkInfection;
+import me.clomclem.sculkcontagione.SculkContagione;
 import net.minecraft.block.entity.SculkCatalystBlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -26,8 +26,8 @@ public abstract class SculkCatalystBlockEntity$ListenerMixin {
         if (event == GameEvent.STEP) {
             Entity i = emitter.sourceEntity();
             if (i instanceof LivingEntity livingEntity) {
-                if (world.getRandom().nextInt(200) == 0 && !livingEntity.hasStatusEffect(SculkInfection.SCULK_SPORES)) {
-                    livingEntity.addStatusEffect(new StatusEffectInstance(SculkInfection.SCULK_SPORES, 12000));
+                if (world.getRandom().nextInt(200) == 0 && !livingEntity.hasStatusEffect(SculkContagione.SCULK_SPORES)) {
+                    livingEntity.addStatusEffect(new StatusEffectInstance(SculkContagione.SCULK_SPORES, 12000));
                 }
 
                 cir.setReturnValue(true);

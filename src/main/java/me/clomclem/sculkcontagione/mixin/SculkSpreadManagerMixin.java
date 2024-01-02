@@ -1,6 +1,6 @@
-package me.clomclem.sculkinfection.mixin;
+package me.clomclem.sculkcontagione.mixin;
 
-import me.clomclem.sculkinfection.accessor.ISculkSpreadManagerAccessor;
+import me.clomclem.sculkcontagione.accessor.ISculkSpreadManagerAccessor;
 import net.minecraft.block.entity.SculkSpreadManager;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;

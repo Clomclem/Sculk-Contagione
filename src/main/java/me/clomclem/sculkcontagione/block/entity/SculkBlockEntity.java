@@ -1,6 +1,6 @@
-package me.clomclem.sculkinfection.block.entity;
+package me.clomclem.sculkcontagione.block.entity;
 
-import me.clomclem.sculkinfection.SculkInfection;
+import me.clomclem.sculkcontagione.SculkContagione;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -24,7 +24,7 @@ public class SculkBlockEntity extends BlockEntity {
     private int blockAmount;
     private float counter = 0.0f;
     public SculkBlockEntity(BlockPos pos, BlockState state) {
-        super(SculkInfection.SCULK_BLOCK_ENTITY, pos, state);
+        super(SculkContagione.SCULK_BLOCK_ENTITY, pos, state);
         previousBlock = null;
         catalystPos = null;
     }
@@ -37,7 +37,7 @@ public class SculkBlockEntity extends BlockEntity {
                     world.removeBlockEntity(pos);
                     world.setBlockState(pos, blockEntity.previousBlock.getDefaultState());
                     world.playSound(null, pos, SoundEvents.BLOCK_SCULK_BREAK, SoundCategory.BLOCKS, 1.0f, 1.0f);
-                    List<BlockPos> neighbours = SculkInfection.getNeighbors(pos);
+                    List<BlockPos> neighbours = SculkContagione.getNeighbors(pos);
                     for (BlockPos pos1 : neighbours) {
                         Block block = world.getBlockState(pos1).getBlock();
                         if (block == Blocks.SCULK_VEIN || block == Blocks.SCULK_SHRIEKER || block == Blocks.SCULK_SENSOR) {

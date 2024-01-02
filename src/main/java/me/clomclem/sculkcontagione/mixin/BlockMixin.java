@@ -1,13 +1,12 @@
-package me.clomclem.sculkinfection.mixin;
+package me.clomclem.sculkcontagione.mixin;
 
-import me.clomclem.sculkinfection.SculkInfection;
+import me.clomclem.sculkcontagione.SculkContagione;
 import net.fabricmc.fabric.api.block.v1.FabricBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -31,7 +30,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static me.clomclem.sculkinfection.SculkInfection.of;
+import static me.clomclem.sculkcontagione.SculkContagione.of;
 
 @Mixin(Block.class)
 public abstract class BlockMixin extends AbstractBlock implements ItemConvertible, FabricBlock {
@@ -43,7 +42,7 @@ public abstract class BlockMixin extends AbstractBlock implements ItemConvertibl
 
     @Inject(method = "onSteppedOn", at = @At("TAIL"))
     private void whenSteppedOn(World world, BlockPos pos, BlockState state, Entity entity, CallbackInfo ci) {
-        if (this.getRegistryEntry().isIn(SculkInfection.SCULK)) {
+        if (this.getRegistryEntry().isIn(SculkContagione.SCULK)) {
             if (entity instanceof LivingEntity livingEntity && !(livingEntity instanceof WardenEntity)) {
                 if (livingEntity instanceof PlayerEntity player && (player.isCreative() || player.isSpectator())) {
                     return;
@@ -58,7 +57,7 @@ public abstract class BlockMixin extends AbstractBlock implements ItemConvertibl
                 }
 
                 if (!hasBoots) {
-                    livingEntity.damage(of(world, SculkInfection.SCULK_ATTRITION), 0.5f);
+                    livingEntity.damage(of(world, SculkContagione.SCULK_ATTRITION), 0.5f);
                     livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 40, 1, false, false));
                     livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 40, 0, false, false));
                     world.playSound(livingEntity instanceof PlayerEntity player ? player : null, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), SoundEvents.BLOCK_SCULK_BREAK, SoundCategory.NEUTRAL, 1.0f, 1.0f);

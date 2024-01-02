@@ -1,4 +1,4 @@
-package me.clomclem.sculkinfection.entity.effect;
+package me.clomclem.sculkcontagione.entity.effect;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
