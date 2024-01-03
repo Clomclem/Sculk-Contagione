@@ -40,8 +40,8 @@ public abstract class SculkBlockMixin extends ExperienceDroppingBlock implements
 
     @WrapOperation(method = "spread",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/block/entity/SculkSpreadManager;isWorldGen()Z"))
-    private boolean enableAlwaysSpawnWarden(SculkSpreadManager instance, Operation<Boolean> original, SculkSpreadManager.Cursor cursor, WorldAccess world, BlockPos catalystPos, Random random, SculkSpreadManager spreadManager, boolean shouldConvertToBlock) {
-        if (((World)world).getGameRules().getBoolean(SculkContagioneGamerules.SCULK_SPREAD_SPAWN_WARDEN)) {
+    private boolean enableAlwaysSpawnWarden(SculkSpreadManager instance, Operation<Boolean> original, SculkSpreadManager.Cursor cursor, WorldAccess worldAccess, BlockPos catalystPos, Random random, SculkSpreadManager spreadManager, boolean shouldConvertToBlock) {
+        if (worldAccess instanceof World world && world.getGameRules().getBoolean(SculkContagioneGamerules.SCULK_SPREAD_SPAWN_WARDEN)) {
             return true;
         } else {
             return original.call(instance);

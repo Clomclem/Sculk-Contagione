@@ -1,11 +1,14 @@
 package me.clomclem.sculkcontagione.block.entity;
 
+import com.mojang.serialization.DataResult;
 import me.clomclem.sculkcontagione.SculkContagione;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtHelper;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -19,7 +22,7 @@ import java.util.List;
 
 public class SculkBlockEntity extends BlockEntity {
 
-    private Block previousBlock;
+    private BlockState previousBlock;
     private BlockPos catalystPos;
     private int blockAmount;
     private float counter = 0.0f;
@@ -35,7 +38,7 @@ public class SculkBlockEntity extends BlockEntity {
                 blockEntity.counter += 0.05f;
                 if (blockEntity.counter >= MathHelper.sqrt(blockEntity.blockAmount)) {
                     world.removeBlockEntity(pos);
-                    world.setBlockState(pos, blockEntity.previousBlock.getDefaultState());
+                    world.setBlockState(pos, blockEntity.previousBlock);
                     world.playSound(null, pos, SoundEvents.BLOCK_SCULK_BREAK, SoundCategory.BLOCKS, 1.0f, 1.0f);
                     List<BlockPos> neighbours = SculkContagione.getNeighbors(pos);
                     for (BlockPos pos1 : neighbours) {
@@ -50,11 +53,11 @@ public class SculkBlockEntity extends BlockEntity {
     }
 
     @Nullable
-    public Block getPreviousBlock() {
+    public BlockState getPreviousBlock() {
         return previousBlock;
     }
 
-    public void setPreviousBlock(Block previousBlock) {
+    public void setPreviousBlock(BlockState previousBlock) {
         this.previousBlock = previousBlock;
     }
 
@@ -78,7 +81,7 @@ public class SculkBlockEntity extends BlockEntity {
     @Override
     public void writeNbt(NbtCompound nbt) {
         if (previousBlock != null) {
-            nbt.putString("previous_block", Registries.BLOCK.getId(previousBlock).toString());
+            nbt.put("previous_block", NbtHelper.fromBlockState(previousBlock));
         }
         if (catalystPos != null) {
             nbt.putIntArray("catalyst_pos", List.of(catalystPos.getX(), catalystPos.getY(), catalystPos.getZ()));
@@ -93,7 +96,8 @@ public class SculkBlockEntity extends BlockEntity {
         super.readNbt(nbt);
 
         if (nbt.contains("previous_block")) {
-            previousBlock = Registries.BLOCK.get(new Identifier(nbt.getString("previous_block")));
+            DataResult<BlockState> blockStateResult = BlockState.CODEC.parse(NbtOps.INSTANCE, nbt.get("previous_block"));
+            previousBlock = blockStateResult.result().orElse(null);
         }
         if (nbt.contains("catalyst_pos")) {
             int[] pos = nbt.getIntArray("catalyst_pos");

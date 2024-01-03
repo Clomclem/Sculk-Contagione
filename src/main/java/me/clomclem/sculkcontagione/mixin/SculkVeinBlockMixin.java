@@ -30,8 +30,8 @@ public abstract class SculkVeinBlockMixin extends MultifaceGrowthBlock implement
 
     @WrapOperation(method = "convertToBlock",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;isIn(Lnet/minecraft/registry/tag/TagKey;)Z"))
-    private boolean replaceTag(BlockState instance, TagKey tagKey, Operation<Boolean> original, SculkSpreadManager spreadManager, WorldAccess world, BlockPos pos, Random random) {
-        if (((World)world).getGameRules().getBoolean(SculkContagioneGamerules.EVERYTHING_TURNS_INTO_SCULK)) {
+    private boolean replaceTag(BlockState instance, TagKey tagKey, Operation<Boolean> original, SculkSpreadManager spreadManager, WorldAccess worldAccess, BlockPos pos, Random random) {
+        if (worldAccess instanceof World world && world.getGameRules().getBoolean(SculkContagioneGamerules.EVERYTHING_TURNS_INTO_SCULK)) {
             return !instance.isIn(SculkContagione.NON_SCULK_REPLACEABLE);
         } else {
             return original.call(instance, tagKey);
@@ -39,16 +39,10 @@ public abstract class SculkVeinBlockMixin extends MultifaceGrowthBlock implement
     }
 
     @Inject(method = "convertToBlock", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/world/WorldAccess;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;I)Z"))
-    private void saveBlockType(SculkSpreadManager spreadManager, WorldAccess world, BlockPos pos, Random random, CallbackInfoReturnable<Boolean> cir, @Local(ordinal = 1) LocalRef<BlockState> blockState, @Share("block") LocalRef<Block> block) {
-        block.set(blockState.get().getBlock());
-    }
-
-    @Inject(method = "convertToBlock", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/world/WorldAccess;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;I)Z", shift = At.Shift.AFTER))
-    private void setBlockType(SculkSpreadManager spreadManager, WorldAccess world, BlockPos pos, Random random, CallbackInfoReturnable<Boolean> cir, @Local(ordinal = 1) LocalRef<BlockPos> blockPos, @Share("block") LocalRef<Block> block) {
-        SculkBlockEntity blockEntity = ((SculkBlockEntity) world.getBlockEntity(blockPos.get()));
-        blockEntity.setPreviousBlock(block.get());
+    private void setBlockType(SculkSpreadManager spreadManager, WorldAccess world, BlockPos pos, Random random, CallbackInfoReturnable<Boolean> cir, @Local(ordinal = 1) BlockPos blockPos, @Local(ordinal = 1) BlockState blockState) {
+        SculkBlockEntity blockEntity = ((SculkBlockEntity) world.getBlockEntity(blockPos));
+        blockEntity.setPreviousBlock(blockState);
         blockEntity.setCatalystPos(spreadManager.getCatalystPos());
         spreadManager.setBlockAmount(spreadManager.getBlockAmount()+1);
         blockEntity.setBlockAmount(spreadManager.getBlockAmount());

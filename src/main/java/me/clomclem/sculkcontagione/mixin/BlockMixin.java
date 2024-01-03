@@ -33,6 +33,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static me.clomclem.sculkcontagione.SculkContagione.of;
 
+@SuppressWarnings("deprecation")
 @Mixin(Block.class)
 public abstract class BlockMixin extends AbstractBlock implements ItemConvertible, FabricBlock {
     @Shadow public abstract RegistryEntry.Reference<Block> getRegistryEntry();
