@@ -2,6 +2,7 @@ package me.clomclem.sculkcontagione.block.entity;
 
 import com.mojang.serialization.DataResult;
 import me.clomclem.sculkcontagione.SculkContagione;
+import me.clomclem.sculkcontagione.world.SculkContagioneGamerules;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -33,7 +34,7 @@ public class SculkBlockEntity extends BlockEntity {
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, SculkBlockEntity blockEntity) {
-        if (blockEntity.previousBlock != null && blockEntity.catalystPos != null) {
+        if (blockEntity.previousBlock != null && blockEntity.catalystPos != null && world.getGameRules().getBoolean(SculkContagioneGamerules.SCULK_SPREAD_REVERTS)) {
             if (world.getBlockState(blockEntity.catalystPos).getBlock() != Blocks.SCULK_CATALYST) {
                 blockEntity.counter += 0.05f;
                 if (blockEntity.counter >= MathHelper.sqrt(blockEntity.blockAmount)) {

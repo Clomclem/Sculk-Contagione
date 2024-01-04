@@ -9,6 +9,8 @@ public class SculkContagioneGamerules {
 
     public static final GameRules.Key<GameRules.BooleanRule> SCULK_SPREAD_SPAWN_WARDEN = GameRuleRegistry.register("sculkSpreadSpawnWarden", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true));
 
+    public static final GameRules.Key<GameRules.BooleanRule> SCULK_SPREAD_REVERTS = GameRuleRegistry.register("sculkSpreadReverts", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true));
+
     public static final GameRules.Key<GameRules.IntRule> SCULK_CATALYST_SPREAD_TICK_DELAY = GameRuleRegistry.register("sculkCatalystSpreadTickdelay", GameRules.Category.MISC, GameRuleFactory.createIntRule(40, 0));
 
     public static final GameRules.Key<GameRules.IntRule> SCULK_CATALYST_SPREAD_AMOUNT = GameRuleRegistry.register("sculkCatalystSpreadAmount", GameRules.Category.MISC, GameRuleFactory.createIntRule(5, 0));
