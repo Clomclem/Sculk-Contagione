@@ -8,8 +8,9 @@
 		"Clomclem"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/Clomclem/Sculk-Contagione"
+		"homepage": "https://modrinth.com/mod/sculk-contagione",
+		"sources": "https://github.com/Clomclem/Sculk-Contagione",
+		"issues": "https://github.com/Clomclem/Sculk-Contagione/issues"
 	},
 	"license": "MIT",
 	"icon": "assets/sculkcontagione/textures/mob_effect/sculk_spores.png",
