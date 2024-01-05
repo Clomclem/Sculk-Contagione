@@ -8,6 +8,7 @@
     "SculkBlockMixin",
     "SculkCatalystBlockEntity$ListenerMixin",
     "SculkCatalystBlockEntityMixin",
+    "SculkSpreadManagerCursorMixin",
     "SculkSpreadManagerMixin",
     "SculkVeinBlockMixin"
   ],
