@@ -9,7 +9,9 @@ public interface ISculkSpreadManagerAccessor {
 
     default void setCatalystPos(BlockPos catalystPos) {}
 
-    default int getBlockAmount() {return 0;}
+    default int getBlockAmount() {
+        return 0;
+    }
 
     default void setBlockAmount(int amount) {}
 }
