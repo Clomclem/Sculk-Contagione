@@ -96,7 +96,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, IL
 
     @Inject(method = "onDeath", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/damage/DamageTracker;update()V"))
     private void onDeath(DamageSource damageSource, CallbackInfo ci) {
-        if (!this.getWorld().isClient && damageSource.isOf(SculkContagione.SCULK_ATTRITION) && !this.isSculk() && this.random.nextBoolean() && !(((LivingEntity)(Object)this) instanceof PlayerEntity)) {
+        if (!this.getWorld().isClient && damageSource.isOf(SculkContagione.SCULK_ATTRITION) && !this.isSculk() && this.random.nextBoolean() && this.getType() != EntityType.PLAYER) {
             ServerWorld world = (ServerWorld) this.getWorld();
             LivingEntity entity = (LivingEntity) this.getType().create(world);
             entity.setSculk(true);

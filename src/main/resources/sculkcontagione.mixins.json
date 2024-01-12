@@ -11,15 +11,18 @@
     "SculkBlockMixin",
     "SculkCatalystBlockEntity$ListenerMixin",
     "SculkCatalystBlockEntityMixin",
+    "SculkSensorBlockEntityVibrationCallbackMixin",
     "SculkSpreadManagerCursorMixin",
     "SculkSpreadManagerMixin",
     "SculkVeinBlockMixin",
+    "ServerPlayerEntityMixin",
     "WardenEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
-    "LivingEntityRendererMixin"
+    "LivingEntityRendererMixin",
+    "PlayerEntityRendererMixin"
   ]
 }
