@@ -5,6 +5,8 @@
   "gamerule.sculkSpreadSpawnWarden.description": "Whether Sculk Shriekers generated artificially by a Sculk Catalyst can summon the Warden.",
   "gamerule.sculkSpreadReverts": "Sculk spread reverts",
   "gamerule.sculkSpreadReverts.description": "Whether blocks will turn back to their original state when a Sculk catalyst is broken.",
+  "gamerule.sculkSpreadGeneratesCatalysts": "Sculk spread generates catalysts",
+  "gamerule.sculkSpreadGeneratesCatalysts.description": "Whether a Sculk catalyst has a chance of spawning another one when spreading.",
   "gamerule.sculkCatalystSpreadTickdelay": "Sculk catalyst spread delay",
   "gamerule.sculkCatalystSpreadTickdelay.description": "The delay (in ticks) it takes for a Sculk Catalyst to spread Sculk.",
   "gamerule.sculkCatalystSpreadAmount": "Sculk catalyst spread amount",

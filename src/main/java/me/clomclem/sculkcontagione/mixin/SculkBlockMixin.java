@@ -30,8 +30,8 @@ public abstract class SculkBlockMixin extends ExperienceDroppingBlock implements
 
     @ModifyReturnValue(method = "getExtraBlockState",
             at = @At("RETURN"))
-    private BlockState modifyExtraBlockstate(BlockState original, WorldAccess world, BlockPos pos, Random random, boolean allowShrieker) {
-        if (random.nextInt(63) == 0) {
+    private BlockState modifyExtraBlockstate(BlockState original, WorldAccess worldAccess, BlockPos pos, Random random, boolean allowShrieker) {
+        if (worldAccess instanceof World world && world.getGameRules().getBoolean(SculkContagioneGamerules.SCULK_SPREAD_GENERATES_CATALYSTS) && random.nextInt(63) == 0) {
             return Blocks.SCULK_CATALYST.getDefaultState();
         } else {
             return original;
