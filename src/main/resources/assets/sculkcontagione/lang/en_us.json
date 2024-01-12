@@ -1,5 +1,6 @@
 {
   "death.attack.sculk_attrition": "%1$s was absorbed into the Sculk",
+  "death.attack.sculk_attrition.player": "%1$s was absorbed into the Sculk while fighting %2$s",
 
   "effect.sculkcontagione.sculk_spores": "Sculk Spores",
 
