@@ -5,14 +5,21 @@
   "mixins": [
     "BlockMixin",
     "ItemEntityMixin",
+    "LivingEntityMixin",
+    "MobEntityAccessor",
+    "MobEntityMixin",
     "SculkBlockMixin",
     "SculkCatalystBlockEntity$ListenerMixin",
     "SculkCatalystBlockEntityMixin",
     "SculkSpreadManagerCursorMixin",
     "SculkSpreadManagerMixin",
-    "SculkVeinBlockMixin"
+    "SculkVeinBlockMixin",
+    "WardenEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-	}
+  },
+  "client": [
+    "LivingEntityRendererMixin"
+  ]
 }

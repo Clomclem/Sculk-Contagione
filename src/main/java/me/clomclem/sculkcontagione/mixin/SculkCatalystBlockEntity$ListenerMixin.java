@@ -1,5 +1,6 @@
 package me.clomclem.sculkcontagione.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import me.clomclem.sculkcontagione.SculkContagione;
 import net.minecraft.block.entity.SculkCatalystBlockEntity;
@@ -19,6 +20,14 @@ public abstract class SculkCatalystBlockEntity$ListenerMixin {
     @ModifyReturnValue(method = "getRange", at = @At("RETURN"))
     private int modifyRange(int original) {
         return original * 4;
+    }
+
+    @Inject(method = "listen", at = @At("HEAD"), cancellable = true)
+    private void onDetect(ServerWorld world, GameEvent event, GameEvent.Emitter emitter, Vec3d emitterPos, CallbackInfoReturnable<Boolean> cir) {
+        if (emitter.sourceEntity() instanceof LivingEntity livingEntity && livingEntity.isSculk()) {
+            cir.setReturnValue(false);
+            cir.cancel();
+        }
     }
 
     @Inject(method = "listen", at = @At("TAIL"), cancellable = true)

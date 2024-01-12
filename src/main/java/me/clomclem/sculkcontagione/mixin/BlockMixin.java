@@ -45,7 +45,7 @@ public abstract class BlockMixin extends AbstractBlock implements ItemConvertibl
     @Inject(method = "onSteppedOn", at = @At("TAIL"))
     private void whenSteppedOn(World world, BlockPos pos, BlockState state, Entity entity, CallbackInfo ci) {
         if (this.getRegistryEntry().isIn(SculkContagione.SCULK)) {
-            if (entity instanceof LivingEntity livingEntity && !(livingEntity instanceof WardenEntity)) {
+            if (entity instanceof LivingEntity livingEntity && !(livingEntity instanceof WardenEntity || livingEntity.isSculk())) {
                 if (livingEntity instanceof PlayerEntity player && (player.isCreative() || player.isSpectator())) {
                     return;
                 }

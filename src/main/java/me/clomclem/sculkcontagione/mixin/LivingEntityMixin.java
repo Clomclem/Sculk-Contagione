@@ -1,0 +1,123 @@
+package me.clomclem.sculkcontagione.mixin;
+
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import me.clomclem.sculkcontagione.SculkContagione;
+import me.clomclem.sculkcontagione.accessor.ILivingEntityAccessor;
+import net.minecraft.entity.Attackable;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.ActiveTargetGoal;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.PathAwareEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+@Mixin(LivingEntity.class)
+public abstract class LivingEntityMixin extends Entity implements Attackable, ILivingEntityAccessor {
+
+    private static final TrackedData<Boolean> IS_SCULK = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+    @Unique
+    private boolean shouldDropLoot;
+
+    public LivingEntityMixin(EntityType<?> type, World world) {
+        super(type, world);
+    }
+
+    @Inject(method = "<init>", at = @At("TAIL"))
+    private void onInit(EntityType entityType, World world, CallbackInfo ci) {
+        getDataTracker().startTracking(IS_SCULK, false);
+        this.shouldDropLoot = true;
+    }
+
+    @Override
+    public boolean isSculk() {
+        return getDataTracker().get(IS_SCULK);
+    }
+
+    @Override
+    public void setSculk(boolean isSculk) {
+        getDataTracker().set(IS_SCULK, isSculk);
+    }
+
+    @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+    private void onWriteNbt(NbtCompound nbt, CallbackInfo ci) {
+        nbt.putBoolean("isSculk", isSculk());
+        nbt.putBoolean("shouldDropLoot", shouldDropLoot);
+    }
+
+    @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+    private void onReadNbt(NbtCompound nbt, CallbackInfo ci) {
+        setSculk(nbt.getBoolean("isSculk"));
+        shouldDropLoot = nbt.getBoolean("shouldDropLoot");
+    }
+
+    @Override
+    public boolean isFireImmune() {
+        if (isSculk()) {
+            return true;
+        } else {
+            return super.isFireImmune();
+        }
+    }
+
+    @ModifyReturnValue(
+            method = "canBreatheInWater",
+            at = @At("RETURN")
+    )
+    private boolean modifyCanBreathe(boolean original) {
+        if (isSculk()) {
+            return true;
+        } else {
+            return original;
+        }
+    }
+
+    @ModifyReturnValue(
+            method = "shouldDropLoot",
+            at = @At("RETURN")
+    )
+    private boolean modifyShouldDropLoot(boolean original) {
+        return original && shouldDropLoot;
+    }
+
+    @Inject(method = "onDeath", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/damage/DamageTracker;update()V"))
+    private void onDeath(DamageSource damageSource, CallbackInfo ci) {
+        if (!this.getWorld().isClient && damageSource.isOf(SculkContagione.SCULK_ATTRITION) && !this.isSculk() && this.random.nextBoolean() && !(((LivingEntity)(Object)this) instanceof PlayerEntity)) {
+            ServerWorld world = (ServerWorld) this.getWorld();
+            LivingEntity entity = (LivingEntity) this.getType().create(world);
+            entity.setSculk(true);
+            entity.setPosition(this.getPos());
+            entity.setYaw(this.getYaw());
+            entity.setPitch(this.getPitch());
+            entity.setPose(this.getPose());
+            entity.disableExperienceDropping();
+            this.shouldDropLoot = false;
+
+            if (this.hasCustomName()) {
+                entity.setCustomName(this.getCustomName());
+            }
+
+            if (entity instanceof MobEntity mobEntity) {
+                if (mobEntity instanceof PathAwareEntity pathAwareEntity) {
+                    ((MobEntityAccessor)pathAwareEntity).getGoalSelector().add(1, new MeleeAttackGoal(pathAwareEntity, 1.0, false));
+                }
+                ((MobEntityAccessor)mobEntity).getTargetSelector().add(1, new ActiveTargetGoal<>(mobEntity, PlayerEntity.class, false, false));
+            }
+            world.spawnEntity(entity);
+        }
+    }
+}

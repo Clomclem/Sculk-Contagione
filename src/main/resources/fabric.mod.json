@@ -33,7 +33,8 @@
 	"custom": {
 		"loom:injected_interfaces": {
 			"net/minecraft/class_7128": ["me/clomclem/sculkcontagione/accessor/ISculkSpreadManagerAccessor"],
-			"net/minecraft/class_1542": ["me/clomclem/sculkcontagione/accessor/IItemEntityAccessor"]
+			"net/minecraft/class_1542": ["me/clomclem/sculkcontagione/accessor/IItemEntityAccessor"],
+			"net/minecraft/class_1309": ["me/clomclem/sculkcontagione/accessor/ILivingEntityAccessor"]
 		}
 	}
 }
