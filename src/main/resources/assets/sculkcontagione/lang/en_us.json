@@ -1,4 +1,8 @@
 {
+  "death.attack.sculk_attrition": "%1$s was absorbed into the Sculk",
+
+  "effect.sculkcontagione.sculk_spores": "Sculk Spores",
+
   "gamerule.everythingTurnsIntoSculk": "Everything turns into Sculk",
   "gamerule.everythingTurnsIntoSculk.description": "Whether to turn all blocks, not just natural ones, into Sculk, when a Sculk Catalyst spreads Sculk.",
   "gamerule.sculkSpreadSpawnWarden": "Sculk can spawn Wardens when spreading",
@@ -10,7 +14,5 @@
   "gamerule.sculkCatalystSpreadTickdelay": "Sculk catalyst spread delay",
   "gamerule.sculkCatalystSpreadTickdelay.description": "The delay (in ticks) it takes for a Sculk Catalyst to spread Sculk.",
   "gamerule.sculkCatalystSpreadAmount": "Sculk catalyst spread amount",
-  "gamerule.sculkCatalystSpreadAmount.description": "The amount of growth (in xp) which the Sculk Catalyst gains when spreading on its own.",
-
-  "effect.sculkcontagione.sculk_spores": "Sculk Spores"
+  "gamerule.sculkCatalystSpreadAmount.description": "The amount of growth (in xp) which the Sculk Catalyst gains when spreading on its own."
 }
