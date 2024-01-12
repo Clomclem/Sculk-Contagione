@@ -26,7 +26,6 @@ public abstract class SculkCatalystBlockEntity$ListenerMixin {
     private void onDetect(ServerWorld world, GameEvent event, GameEvent.Emitter emitter, Vec3d emitterPos, CallbackInfoReturnable<Boolean> cir) {
         if (emitter.sourceEntity() instanceof LivingEntity livingEntity && livingEntity.isSculk()) {
             cir.setReturnValue(false);
-            cir.cancel();
         }
     }
 
@@ -40,7 +39,6 @@ public abstract class SculkCatalystBlockEntity$ListenerMixin {
                 }
 
                 cir.setReturnValue(true);
-                cir.cancel();
             }
         }
     }

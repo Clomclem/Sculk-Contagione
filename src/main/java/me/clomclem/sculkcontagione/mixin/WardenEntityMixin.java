@@ -23,7 +23,6 @@ public abstract class WardenEntityMixin extends HostileEntity implements Vibrati
     private void modifyValidTarget(Entity entity, CallbackInfoReturnable<Boolean> cir) {
         if (entity instanceof LivingEntity livingEntity && livingEntity.isSculk()) {
             cir.setReturnValue(false);
-            cir.cancel();
         }
     }
 }
