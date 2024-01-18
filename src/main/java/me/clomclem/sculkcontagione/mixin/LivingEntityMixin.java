@@ -3,18 +3,17 @@ package me.clomclem.sculkcontagione.mixin;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import me.clomclem.sculkcontagione.SculkContagione;
 import me.clomclem.sculkcontagione.accessor.ILivingEntityAccessor;
-import net.minecraft.entity.Attackable;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
+import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
@@ -25,10 +24,14 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.function.Predicate;
+
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements Attackable, ILivingEntityAccessor {
 
     private static final TrackedData<Boolean> IS_SCULK = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+    private static final Predicate<LivingEntity> CAN_ATTACK_PREDICATE = entity -> !entity.isSculk() && !(entity instanceof WardenEntity);
 
     @Unique
     private boolean shouldDropLoot;
@@ -74,6 +77,12 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, IL
         }
     }
 
+    @Override
+    public boolean isInvulnerableTo(DamageSource damageSource) {
+        return super.isInvulnerableTo(damageSource) || (isSculk() && (damageSource.isOf(DamageTypes.LAVA) || damageSource.isOf(DamageTypes.DROWN) || damageSource.isOf(DamageTypes.FREEZE) || damageSource.isOf(DamageTypes.FALL)
+                || damageSource.isOf(DamageTypes.IN_WALL) || damageSource.isOf(DamageTypes.IN_FIRE) || damageSource.isOf(DamageTypes.ON_FIRE) || damageSource.isOf(DamageTypes.SONIC_BOOM)));
+    }
+
     @ModifyReturnValue(
             method = "canBreatheInWater",
             at = @At("RETURN")
@@ -115,7 +124,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, IL
                 if (mobEntity instanceof PathAwareEntity pathAwareEntity) {
                     ((MobEntityAccessor)pathAwareEntity).getGoalSelector().add(1, new MeleeAttackGoal(pathAwareEntity, 1.0, false));
                 }
-                ((MobEntityAccessor)mobEntity).getTargetSelector().add(1, new ActiveTargetGoal<>(mobEntity, PlayerEntity.class, false, false));
+                ((MobEntityAccessor)mobEntity).getTargetSelector().add(1, new ActiveTargetGoal<>(mobEntity, LivingEntity.class, false, CAN_ATTACK_PREDICATE));
             }
             world.spawnEntity(entity);
         }

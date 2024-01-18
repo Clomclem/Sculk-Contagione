@@ -13,7 +13,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(WardenEntity.class)
-
 public abstract class WardenEntityMixin extends HostileEntity implements Vibrations {
     protected WardenEntityMixin(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);

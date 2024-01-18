@@ -34,14 +34,6 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
         super(world, pos, yaw, gameProfile);
     }
 
-    @ModifyReturnValue(
-            method = "isInvulnerableTo",
-            at = @At("RETURN")
-    )
-    private boolean isInvulnerableTo(boolean original, DamageSource damageSource) {
-        return original || (isSculk() && (damageSource.isOf(DamageTypes.LAVA) || damageSource.isOf(DamageTypes.DROWN)));
-    }
-
 
     @Inject(method = "onDeath", at = @At("HEAD"))
     private void checkOnDeath(DamageSource damageSource, CallbackInfo ci, @Share("shouldTurnToSculk") LocalBooleanRef shouldTurnToSculk) {

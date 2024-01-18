@@ -19,7 +19,7 @@ public class SculkSporesStatusEffect extends StatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        if (entity instanceof WardenEntity) {
+        if (entity instanceof WardenEntity || entity.isSculk()) {
             return;
         }
         entity.getWorld().setBlockState(entity.getBlockPos(), Blocks.SCULK_CATALYST.getDefaultState());

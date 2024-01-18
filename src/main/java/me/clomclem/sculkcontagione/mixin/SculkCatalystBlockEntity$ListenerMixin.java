@@ -1,12 +1,12 @@
 package me.clomclem.sculkcontagione.mixin;
 
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import me.clomclem.sculkcontagione.SculkContagione;
 import net.minecraft.block.entity.SculkCatalystBlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.event.GameEvent;
@@ -33,7 +33,7 @@ public abstract class SculkCatalystBlockEntity$ListenerMixin {
     private void onListen(ServerWorld world, GameEvent event, GameEvent.Emitter emitter, Vec3d emitterPos, CallbackInfoReturnable<Boolean> cir) {
         if (event == GameEvent.STEP) {
             Entity i = emitter.sourceEntity();
-            if (i instanceof LivingEntity livingEntity) {
+            if (i instanceof LivingEntity livingEntity && !(livingEntity instanceof WardenEntity)) {
                 if (world.getRandom().nextInt(200) == 0 && !livingEntity.hasStatusEffect(SculkContagione.SCULK_SPORES)) {
                     livingEntity.addStatusEffect(new StatusEffectInstance(SculkContagione.SCULK_SPORES, 12000));
                 }
