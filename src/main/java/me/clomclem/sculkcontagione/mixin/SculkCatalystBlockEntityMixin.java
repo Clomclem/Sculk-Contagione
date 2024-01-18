@@ -20,7 +20,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(SculkCatalystBlockEntity.class)
 public abstract class SculkCatalystBlockEntityMixin extends BlockEntity implements GameEventListener.Holder<SculkCatalystBlockEntity.Listener> {
 
-    @Shadow @Final private SculkCatalystBlockEntity.Listener eventListener;
+    @Shadow
+    @Final
+    private SculkCatalystBlockEntity.Listener eventListener;
 
     public SculkCatalystBlockEntityMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);

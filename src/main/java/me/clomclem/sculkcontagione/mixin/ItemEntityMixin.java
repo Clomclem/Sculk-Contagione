@@ -19,9 +19,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ItemEntity.class)
 public abstract class ItemEntityMixin extends Entity implements Ownable, IItemEntityAccessor {
 
-    @Shadow private int itemAge;
+    @Shadow
+    private int itemAge;
 
-    @Shadow public abstract ItemStack getStack();
+    @Shadow
+    public abstract ItemStack getStack();
 
     public ItemEntityMixin(EntityType<?> type, World world) {
         super(type, world);

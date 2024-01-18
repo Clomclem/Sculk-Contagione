@@ -36,7 +36,8 @@ import static me.clomclem.sculkcontagione.SculkContagione.of;
 @SuppressWarnings("deprecation")
 @Mixin(Block.class)
 public abstract class BlockMixin extends AbstractBlock implements ItemConvertible, FabricBlock {
-    @Shadow public abstract RegistryEntry.Reference<Block> getRegistryEntry();
+    @Shadow
+    public abstract RegistryEntry.Reference<Block> getRegistryEntry();
 
     public BlockMixin(Settings settings) {
         super(settings);
