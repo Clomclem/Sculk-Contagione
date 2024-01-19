@@ -1,12 +1,14 @@
 {
   "values": [
     "#sculkcontagione:sculk",
+    "#minecraft:fire",
+    "#minecraft:portals",
+    "minecraft:water",
+    "minecraft:lava",
     "minecraft:air",
     "minecraft:barrier",
     "minecraft:bedrock",
-    "minecraft:end_portal",
     "minecraft:end_portal_frame",
-    "minecraft:end_gateway",
     "minecraft:command_block",
     "minecraft:repeating_command_block",
     "minecraft:chain_command_block",
