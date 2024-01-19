@@ -22,7 +22,6 @@ public class SculkSporesStatusEffect extends StatusEffect {
         if (entity instanceof WardenEntity || entity.isSculk()) {
             return;
         }
-        entity.getWorld().setBlockState(entity.getBlockPos(), Blocks.SCULK_CATALYST.getDefaultState());
         if (!(entity instanceof PlayerEntity player && (player.isCreative() || player.isSpectator()))) {
             entity.kill();
         }

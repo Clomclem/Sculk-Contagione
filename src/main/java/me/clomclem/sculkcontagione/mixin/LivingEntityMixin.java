@@ -3,6 +3,7 @@ package me.clomclem.sculkcontagione.mixin;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import me.clomclem.sculkcontagione.SculkContagione;
 import me.clomclem.sculkcontagione.accessor.ILivingEntityAccessor;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
@@ -11,6 +12,7 @@ import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.mob.WardenEntity;
@@ -19,6 +21,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -28,6 +31,10 @@ import java.util.function.Predicate;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements Attackable, ILivingEntityAccessor {
+
+    @Shadow public abstract boolean hasStatusEffect(StatusEffect effect);
+
+    @Shadow public abstract void disableExperienceDropping();
 
     private static final TrackedData<Boolean> IS_SCULK = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
@@ -54,6 +61,11 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, IL
     @Override
     public void setSculk(boolean isSculk) {
         getDataTracker().set(IS_SCULK, isSculk);
+    }
+
+    @Override
+    public void setShouldDropLoot(boolean shouldDropLoot) {
+        this.shouldDropLoot = shouldDropLoot;
     }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
@@ -101,6 +113,15 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, IL
     )
     private boolean modifyShouldDropLoot(boolean original) {
         return original && shouldDropLoot;
+    }
+
+    @Inject(method = "onDeath", at = @At("HEAD"))
+    private void sculkSporesDeath(DamageSource damageSource, CallbackInfo ci) {
+        if (!this.getWorld().isClient && this.hasStatusEffect(SculkContagione.SCULK_SPORES)) {
+            this.getWorld().setBlockState(this.getBlockPos(), Blocks.SCULK_CATALYST.getDefaultState());
+            this.disableExperienceDropping();
+            shouldDropLoot = false;
+        }
     }
 
     @Inject(method = "onDeath", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/damage/DamageTracker;update()V"))

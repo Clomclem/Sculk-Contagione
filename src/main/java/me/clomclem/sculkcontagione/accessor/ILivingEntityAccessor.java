@@ -8,4 +8,8 @@ public interface ILivingEntityAccessor {
     default void setSculk(boolean isSculk) {
 
     }
+
+    default void setShouldDropLoot(boolean shouldDropLoot) {
+
+    }
 }

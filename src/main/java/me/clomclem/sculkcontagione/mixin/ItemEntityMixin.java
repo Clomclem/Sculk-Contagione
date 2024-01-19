@@ -9,6 +9,7 @@ import net.minecraft.entity.Ownable;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -37,7 +38,7 @@ public abstract class ItemEntityMixin extends Entity implements Ownable, IItemEn
     @SuppressWarnings("deprecation")
     @Inject(method = "onPlayerCollision", at = @At("HEAD"), cancellable = true)
     private void onPlayerCollision(PlayerEntity player, CallbackInfo ci) {
-        if (player.isSculk() && !(this.getStack().getItem() instanceof BlockItem blockItem && blockItem.getBlock().getRegistryEntry().isIn(SculkContagione.SCULK))) {
+        if (player.isSculk() && !((this.getStack().getItem() instanceof BlockItem blockItem && blockItem.getBlock().getRegistryEntry().isIn(SculkContagione.SCULK)) || this.getStack().isOf(Items.ENCHANTED_GOLDEN_APPLE))) {
             ci.cancel();
         }
     }
