@@ -40,7 +40,7 @@ public class SculkBlockEntity extends BlockEntity {
                 if (blockEntity.counter >= MathHelper.sqrt(blockEntity.blockAmount)) {
                     world.removeBlockEntity(pos);
                     world.setBlockState(pos, blockEntity.previousBlock);
-                    world.playSound(null, pos, SoundEvents.BLOCK_SCULK_BREAK, SoundCategory.BLOCKS, 1.0f, 1.0f);
+                    world.playSound(null, pos, SoundEvents.BLOCK_SCULK_BREAK, SoundCategory.BLOCKS, 0.5f, 1.0f);
                     List<BlockPos> neighbours = SculkContagione.getNeighbors(pos);
                     for (BlockPos pos1 : neighbours) {
                         Block block = world.getBlockState(pos1).getBlock();
