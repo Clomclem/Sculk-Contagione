@@ -1,6 +1,7 @@
 /*
-    Code taken from Sculkhunt (https://github.com/Ladysnake/Sculkhunt/blob/main/src/main/java/ladysnake/sculkhunt/mixin/client/PlayerEntityRendererMixin.java).
-    All credits go to Doctor4t
+    Code taken from Sculkhunt (https://github.com/Ladysnake/Sculkhunt/blob/main/src/main/java/ladysnake/sculkhunt/mixin/client/PlayerEntityRendererMixin.java),
+    licensed under GPLv3.
+    All credits go to doctor4t
  */
 
 package me.clomclem.sculkcontagione.mixin;
