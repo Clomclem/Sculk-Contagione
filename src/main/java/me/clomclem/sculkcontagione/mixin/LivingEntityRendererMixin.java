@@ -1,5 +1,6 @@
 package me.clomclem.sculkcontagione.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import me.clomclem.sculkcontagione.SculkContagione;
@@ -28,11 +29,9 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
         super(ctx);
     }
 
-    @WrapOperation(method = "getRenderLayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/LivingEntityRenderer;getTexture(Lnet/minecraft/entity/Entity;)Lnet/minecraft/util/Identifier;"))
-    private Identifier changeTexture(LivingEntityRenderer instance, Entity entity, Operation<Identifier> original) throws IOException {
-        Identifier originalTexture = original.call(instance, entity);
-        LivingEntity livingEntity = (LivingEntity) entity;
-        if (livingEntity.isSculk()) {
+    @ModifyExpressionValue(method = "getRenderLayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/LivingEntityRenderer;getTexture(Lnet/minecraft/entity/Entity;)Lnet/minecraft/util/Identifier;"))
+    private Identifier changeTexture(Identifier originalTexture, T entity, boolean showBody, boolean translucent, boolean showOutline) throws IOException {
+        if (((LivingEntity) entity).isSculk()) {
             if (this.texture == null) {
                 String textureSize = "64x64";
                 NativeImage image = NativeImage.read(MinecraftClient.getInstance().getResourceManager().open(originalTexture));

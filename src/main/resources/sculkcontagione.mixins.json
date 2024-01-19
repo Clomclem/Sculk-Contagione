@@ -8,6 +8,7 @@
     "LivingEntityMixin",
     "MobEntityAccessor",
     "MobEntityMixin",
+    "PlayerEntityMixin",
     "SculkBlockMixin",
     "SculkCatalystBlockEntity$ListenerMixin",
     "SculkCatalystBlockEntityMixin",

@@ -7,12 +7,15 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.mob.WardenEntity;
@@ -135,6 +138,10 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, IL
             entity.setPitch(this.getPitch());
             entity.setPose(this.getPose());
             entity.disableExperienceDropping();
+            entity.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(entity.getAttributeBaseValue(EntityAttributes.GENERIC_MAX_HEALTH) * 1.5);
+            entity.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).setBaseValue(entity.getAttributeBaseValue(EntityAttributes.GENERIC_MOVEMENT_SPEED) * 1.5);
+            entity.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE).setBaseValue(entity.getAttributeBaseValue(EntityAttributes.GENERIC_ATTACK_DAMAGE) * 2.0);
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SATURATION, StatusEffectInstance.INFINITE, 0, false, false, false));
             this.shouldDropLoot = false;
 
             if (this.hasCustomName()) {
@@ -143,9 +150,9 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, IL
 
             if (entity instanceof MobEntity mobEntity) {
                 if (mobEntity instanceof PathAwareEntity pathAwareEntity) {
-                    ((MobEntityAccessor)pathAwareEntity).getGoalSelector().add(1, new MeleeAttackGoal(pathAwareEntity, 1.0, false));
+                    ((MobEntityAccessor)pathAwareEntity).getGoalSelector().add(0, new MeleeAttackGoal(pathAwareEntity, 1.0, false));
                 }
-                ((MobEntityAccessor)mobEntity).getTargetSelector().add(1, new ActiveTargetGoal<>(mobEntity, LivingEntity.class, false, CAN_ATTACK_PREDICATE));
+                ((MobEntityAccessor)mobEntity).getTargetSelector().add(0, new ActiveTargetGoal<>(mobEntity, LivingEntity.class, false, CAN_ATTACK_PREDICATE));
             }
             world.spawnEntity(entity);
         }

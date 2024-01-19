@@ -5,9 +5,11 @@ import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import com.mojang.authlib.GameProfile;
 import me.clomclem.sculkcontagione.SculkContagione;
+import me.clomclem.sculkcontagione.SculkContagioneAttachmentTypes;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -23,14 +25,20 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.List;
 
 @Mixin(ServerPlayerEntity.class)
 public abstract class ServerPlayerEntityMixin extends PlayerEntity {
@@ -75,10 +83,20 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
             this.requestRespawn();
             this.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, StatusEffectInstance.INFINITE, 0, false, false, false));
             this.addStatusEffect(new StatusEffectInstance(StatusEffects.SATURATION, StatusEffectInstance.INFINITE, 0, false, false, false));
-            BlockPos spawnPos = this.getServerWorld().getSpawnPos();
-            this.refreshPositionAfterTeleport(spawnPos.toCenterPos());
-            if (this.getServerWorld().getBlockState(spawnPos.down()).getBlock() != Blocks.SCULK_CATALYST) {
-                this.getServerWorld().setBlockState(spawnPos.down(), Blocks.SCULK_CATALYST.getDefaultState());
+
+            BlockPos closestCatalyst = getClosestCatalyst();
+
+            Random rand = this.getRandom();
+            if (closestCatalyst != null) {
+                Vec3d pos = closestCatalyst.add(rand.nextBetween(-1, 1), rand.nextBetween(0, 1), rand.nextBetween(-1, 1)).toCenterPos();
+                this.teleport(pos.x, pos.y, pos.z);
+            } else {
+                BlockPos spawnPos = getServerWorld().getSpawnPos().add(rand.nextBetween(-1, 1), rand.nextBetween(0, 1), rand.nextBetween(-1, 1));
+                Vec3d pos = spawnPos.toCenterPos();
+                this.teleport(pos.x, pos.y, pos.z);
+                if (this.getServerWorld().getBlockState(spawnPos).getBlock() != Blocks.SCULK_CATALYST) {
+                    this.getServerWorld().setBlockState(spawnPos, Blocks.SCULK_CATALYST.getDefaultState());
+                }
             }
 
             this.getWorld().sendEntityStatus(this, EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES);
@@ -88,6 +106,25 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
             this.getDamageTracker().update();
             ci.cancel();
         }
+    }
+
+    @Nullable
+    @Unique
+    private BlockPos getClosestCatalyst() {
+        List<BlockPos> catalysts = getServerWorld().getAttachedOrCreate(SculkContagioneAttachmentTypes.WORLD_CATALYST_LIST);
+
+        if (catalysts.isEmpty()) {
+            return null;
+        }
+
+        BlockPos catalyst = catalysts.get(0);
+
+        for (BlockPos pos : catalysts) {
+            if (pos.getManhattanDistance(this.getBlockPos()) < catalyst.getManhattanDistance(this.getBlockPos())) {
+                catalyst = pos;
+            }
+        }
+        return catalyst;
     }
 
     @Inject(method = "onDeath", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;sendEntityStatus(Lnet/minecraft/entity/Entity;B)V"))
@@ -100,6 +137,9 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
             this.requestRespawn();
             this.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, StatusEffectInstance.INFINITE, 0, false, false, false));
             this.addStatusEffect(new StatusEffectInstance(StatusEffects.SATURATION, StatusEffectInstance.INFINITE, 0, false, false, false));
+            this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(this.getAttributeBaseValue(EntityAttributes.GENERIC_MAX_HEALTH) * 1.5);
+            this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).setBaseValue(this.getAttributeBaseValue(EntityAttributes.GENERIC_MOVEMENT_SPEED) * 1.5);
+            this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE).setBaseValue(this.getAttributeBaseValue(EntityAttributes.GENERIC_ATTACK_DAMAGE) * 2.0);
             getServerWorld().playSoundFromEntity(this, this, SoundEvents.ENTITY_WARDEN_DEATH, SoundCategory.PLAYERS, 1.0f, 1.0f);
         }
     }
@@ -125,6 +165,9 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
         if (isSculk() && this.activeItemStack.isOf(Items.ENCHANTED_GOLDEN_APPLE)) {
             this.setSculk(false);
             this.clearStatusEffects();
+            this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(this.getAttributeBaseValue(EntityAttributes.GENERIC_MAX_HEALTH) / 1.5);
+            this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).setBaseValue(this.getAttributeBaseValue(EntityAttributes.GENERIC_MOVEMENT_SPEED) / 1.5);
+            this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE).setBaseValue(this.getAttributeBaseValue(EntityAttributes.GENERIC_ATTACK_DAMAGE) / 2.0);
             getServerWorld().playSoundFromEntity(this, this, SoundEvents.ENTITY_ZOMBIE_VILLAGER_CURE, SoundCategory.PLAYERS, 1.0f, 1.0f);
         }
     }

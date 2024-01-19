@@ -1,11 +1,13 @@
 package me.clomclem.sculkcontagione.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import me.clomclem.sculkcontagione.SculkContagione;
 import net.fabricmc.fabric.api.block.v1.FabricBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
@@ -20,16 +22,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.List;
 
 import static me.clomclem.sculkcontagione.SculkContagione.of;
 
@@ -85,6 +91,15 @@ public abstract class BlockMixin extends AbstractBlock implements ItemConvertibl
                 }
             }
         }
+    }
+
+    @ModifyReturnValue(method = "getDroppedStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/entity/BlockEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/item/ItemStack;)Ljava/util/List;",
+    at = @At("RETURN"))
+    private static List<ItemStack> onDropStacks1(List<ItemStack> original, BlockState state, ServerWorld world, BlockPos pos, @Nullable BlockEntity blockEntity, @Nullable Entity entity, ItemStack stack) {
+        if (entity instanceof LivingEntity livingEntity && livingEntity.isSculk() && state.isIn(SculkContagione.SCULK)) {
+            original.add(new ItemStack(state.getBlock(), 1));
+        }
+        return original;
     }
 
 }

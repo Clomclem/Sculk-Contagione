@@ -1,6 +1,8 @@
 package me.clomclem.sculkcontagione.mixin;
 
+import me.clomclem.sculkcontagione.SculkContagioneAttachmentTypes;
 import me.clomclem.sculkcontagione.world.SculkContagioneGamerules;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentTarget;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -17,6 +19,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.List;
+
 @Mixin(SculkCatalystBlockEntity.class)
 public abstract class SculkCatalystBlockEntityMixin extends BlockEntity implements GameEventListener.Holder<SculkCatalystBlockEntity.Listener> {
 
@@ -31,6 +35,30 @@ public abstract class SculkCatalystBlockEntityMixin extends BlockEntity implemen
     @Inject(method = "<init>", at = @At("TAIL"))
     private void onInit(BlockPos pos, BlockState state, CallbackInfo ci) {
         this.eventListener.getSpreadManager().setCatalystPos(pos);
+    }
+
+    @Override
+    public void setWorld(World world) {
+        super.setWorld(world);
+        ((AttachmentTarget) world).getAttachedOrCreate(SculkContagioneAttachmentTypes.WORLD_CATALYST_LIST).add(pos);
+    }
+
+    @Override
+    public void markRemoved() {
+        super.markRemoved();
+        List<BlockPos> blockPosList = ((AttachmentTarget) getWorld()).getAttachedOrCreate(SculkContagioneAttachmentTypes.WORLD_CATALYST_LIST);
+        if (blockPosList.contains(pos)) {
+            blockPosList.remove(pos);
+        }
+    }
+
+    @Override
+    public void cancelRemoval() {
+        super.cancelRemoval();
+        List<BlockPos> blockPosList = ((AttachmentTarget) getWorld()).getAttachedOrCreate(SculkContagioneAttachmentTypes.WORLD_CATALYST_LIST);
+        if (!blockPosList.contains(pos)) {
+            blockPosList.add(pos);
+        }
     }
 
     @Inject(method = "tick", at = @At("HEAD"))
