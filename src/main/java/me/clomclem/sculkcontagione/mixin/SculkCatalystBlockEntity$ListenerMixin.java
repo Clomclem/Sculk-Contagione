@@ -35,7 +35,7 @@ public abstract class SculkCatalystBlockEntity$ListenerMixin {
             Entity i = emitter.sourceEntity();
             if (i instanceof LivingEntity livingEntity && !(livingEntity instanceof WardenEntity)) {
                 if (world.getRandom().nextInt(200) == 0 && !livingEntity.hasStatusEffect(SculkContagione.SCULK_SPORES)) {
-                    livingEntity.addStatusEffect(new StatusEffectInstance(SculkContagione.SCULK_SPORES, 12000));
+                    livingEntity.addStatusEffect(new StatusEffectInstance(SculkContagione.SCULK_SPORES, 6000));
                 }
 
                 cir.setReturnValue(true);
