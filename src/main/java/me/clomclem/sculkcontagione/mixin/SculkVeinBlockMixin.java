@@ -30,7 +30,7 @@ public abstract class SculkVeinBlockMixin extends MultifaceGrowthBlock implement
 
     @WrapOperation(method = "convertToBlock",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;isIn(Lnet/minecraft/registry/tag/TagKey;)Z"))
-    private boolean replaceTag(BlockState instance, TagKey tagKey, Operation<Boolean> original, SculkSpreadManager spreadManager, WorldAccess worldAccess, BlockPos pos, Random random) {
+    private boolean replaceTag(BlockState instance, TagKey<Block> tagKey, Operation<Boolean> original, SculkSpreadManager spreadManager, WorldAccess worldAccess, BlockPos pos, Random random) {
         if (worldAccess instanceof World world && world.getGameRules().getBoolean(SculkContagioneGamerules.EVERYTHING_TURNS_INTO_SCULK)) {
             return !instance.isIn(SculkContagione.NON_SCULK_REPLACEABLE);
         } else {
