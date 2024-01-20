@@ -17,5 +17,9 @@ public class SculkContagioneGamerules {
 
     public static final GameRules.Key<GameRules.IntRule> SCULK_CATALYST_SPREAD_AMOUNT = GameRuleRegistry.register("sculkCatalystSpreadAmount", GameRules.Category.MISC, GameRuleFactory.createIntRule(5, 0));
 
+    public static final GameRules.Key<GameRules.IntRule> SCULK_CATALYST_SPAWN_DELAY = GameRuleRegistry.register("sculkCatalystSpawnDelay", GameRules.Category.MISC, GameRuleFactory.createIntRule(400, 0));
+
+    public static final GameRules.Key<GameRules.IntRule> SCULK_CATALYST_SPAWN_RADIUS = GameRuleRegistry.register("sculkCatalystSpawnRadius", GameRules.Category.MISC, GameRuleFactory.createIntRule(20, 1));
+
     public static void initialize() {}
 }

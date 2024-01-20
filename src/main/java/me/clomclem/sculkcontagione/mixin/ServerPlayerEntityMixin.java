@@ -6,6 +6,7 @@ import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import com.mojang.authlib.GameProfile;
 import me.clomclem.sculkcontagione.SculkContagione;
 import me.clomclem.sculkcontagione.SculkContagioneAttachmentTypes;
+import me.clomclem.sculkcontagione.world.SculkContagioneGamerules;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.LivingEntity;
@@ -47,8 +48,33 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 
     @Shadow protected abstract void forgiveMobAnger();
 
+    @Shadow public abstract boolean isCreative();
+
+    @Shadow public abstract boolean isSpectator();
+
     public ServerPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile gameProfile) {
         super(world, pos, yaw, gameProfile);
+    }
+
+    @Inject(method = "tick", at = @At("TAIL"))
+    private void onTick(CallbackInfo ci) {
+        final int spawnDelay = getServerWorld().getGameRules().getInt(SculkContagioneGamerules.SCULK_CATALYST_SPAWN_DELAY);
+        if (!(isCreative() || isSpectator() || isSculk()) && spawnDelay != 0
+                && getRandom().nextInt(spawnDelay) == 0) {
+            final int range = getServerWorld().getGameRules().getInt(SculkContagioneGamerules.SCULK_CATALYST_SPAWN_RADIUS);
+            World world = getWorld();
+            BlockPos pos = getBlockPos().add(random.nextBetween(-range, range), random.nextBetween(-range, range), random.nextBetween(-range, range));
+            int counter = 0;
+            while (!world.getBlockState(pos).isAir() || world.getBlockState(pos.down()).isAir() ||
+                    !world.getBlockState(pos.down()).isFullCube(world, pos) || pos == getBlockPos()) {
+                pos = getBlockPos().add(random.nextBetween(-range, range), random.nextBetween(-range, range), random.nextBetween(-range, range));
+                counter++;
+                if (counter > 10) {
+                    return;
+                }
+            }
+            world.setBlockState(pos, Blocks.SCULK_CATALYST.getDefaultState());
+        }
     }
 
 

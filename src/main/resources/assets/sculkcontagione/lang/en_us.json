@@ -15,5 +15,9 @@
   "gamerule.sculkCatalystSpreadTickdelay": "Sculk catalyst spread delay",
   "gamerule.sculkCatalystSpreadTickdelay.description": "The delay (in ticks) it takes for a Sculk Catalyst to spread Sculk.",
   "gamerule.sculkCatalystSpreadAmount": "Sculk catalyst spread amount",
-  "gamerule.sculkCatalystSpreadAmount.description": "The amount of growth (in xp) which the Sculk Catalyst gains when spreading on its own."
+  "gamerule.sculkCatalystSpreadAmount.description": "The amount of growth (in xp) which the Sculk Catalyst gains when spreading on its own.",
+  "gamerule.sculkCatalystSpawnDelay": "Sculk catalyst spawn delay",
+  "gamerule.sculkCatalystSpawnDelay.description": "The amount of delay when spawning Sculk catalysts near non-sculk players.",
+  "gamerule.sculkCatalystSpawnRadius": "Sculk catalyst spawn radius",
+  "gamerule.sculkCatalystSpawnRadius.description": "The radius for spawning Sculk catalysts near non-sculk players."
 }
