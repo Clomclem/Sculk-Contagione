@@ -1,0 +1,23 @@
+package me.clomclem.sculkcontagione.potion;
+
+import me.clomclem.sculkcontagione.SculkContagione;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.item.Items;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.Potions;
+import net.minecraft.recipe.BrewingRecipeRegistry;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.util.Identifier;
+
+public class SculkContagionePotions {
+    public static final Potion SCULK_SPORES = register("sculk_spores", new Potion(new StatusEffectInstance(SculkContagione.SCULK_SPORES, 1200)));
+
+    public static Potion register(String name, Potion potion) {
+        return Registry.register(Registries.POTION, new Identifier(SculkContagione.ID, name), potion);
+    }
+
+    public static void register() {
+        BrewingRecipeRegistry.registerPotionRecipe(Potions.MUNDANE, Items.SCULK_CATALYST, SCULK_SPORES);
+    }
+}

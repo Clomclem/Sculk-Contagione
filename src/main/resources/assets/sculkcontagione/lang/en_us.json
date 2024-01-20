@@ -4,6 +4,10 @@
 
   "effect.sculkcontagione.sculk_spores": "Sculk Spores",
 
+  "item.minecraft.lingering_potion.effect.sculk_spores": "Sculk Spores Lingering Potion",
+  "item.minecraft.potion.effect.sculk_spores": "Sculk Spores Potion",
+  "item.minecraft.splash_potion.effect.sculk_spores": "Sculk Spores Splash Potion",
+
   "gamerule.everythingTurnsIntoSculk": "Everything turns into Sculk",
   "gamerule.everythingTurnsIntoSculk.description": "Whether to turn all blocks, not just natural ones, into Sculk, when a Sculk Catalyst spreads Sculk.",
   "gamerule.sculkSpreadSpawnWarden": "Sculk can spawn Wardens when spreading",

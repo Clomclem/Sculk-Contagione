@@ -2,6 +2,7 @@ package me.clomclem.sculkcontagione;
 
 import me.clomclem.sculkcontagione.block.entity.SculkBlockEntity;
 import me.clomclem.sculkcontagione.entity.effect.SculkSporesStatusEffect;
+import me.clomclem.sculkcontagione.potion.SculkContagionePotions;
 import me.clomclem.sculkcontagione.world.SculkContagioneGamerules;
 import net.fabricmc.api.ModInitializer;
 
@@ -80,6 +81,7 @@ public class SculkContagione implements ModInitializer {
 		);
 
 		Registry.register(Registries.STATUS_EFFECT, new Identifier(ID, "sculk_spores"), SCULK_SPORES);
+		SculkContagionePotions.register();
 
 		SculkContagioneGamerules.initialize();
 
