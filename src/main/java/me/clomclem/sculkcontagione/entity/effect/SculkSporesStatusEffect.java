@@ -1,6 +1,5 @@
 package me.clomclem.sculkcontagione.entity.effect;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;

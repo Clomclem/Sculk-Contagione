@@ -3,8 +3,6 @@ package me.clomclem.sculkcontagione.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.llamalad7.mixinextras.sugar.Share;
-import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import me.clomclem.sculkcontagione.SculkContagione;
 import me.clomclem.sculkcontagione.block.entity.SculkBlockEntity;
 import me.clomclem.sculkcontagione.world.SculkContagioneGamerules;

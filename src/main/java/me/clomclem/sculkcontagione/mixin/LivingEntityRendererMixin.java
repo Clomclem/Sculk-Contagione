@@ -1,8 +1,6 @@
 package me.clomclem.sculkcontagione.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import me.clomclem.sculkcontagione.SculkContagione;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.entity.EntityRenderer;
@@ -11,10 +9,7 @@ import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.texture.NativeImage;
-import net.minecraft.client.util.RawTextureDataLoader;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
