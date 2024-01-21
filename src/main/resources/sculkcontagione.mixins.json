@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "BlockMixin",
+    "StorageBlockMixin",
     "ItemEntityMixin",
     "LivingEntityMixin",
     "MobEntityAccessor",
@@ -13,6 +14,8 @@
     "SculkCatalystBlockEntity$ListenerMixin",
     "SculkCatalystBlockEntityMixin",
     "SculkSensorBlockEntityVibrationCallbackMixin",
+    "SculkSensorBlockMixin",
+    "SculkShriekerBlockMixin",
     "SculkSpreadManagerCursorMixin",
     "SculkSpreadManagerMixin",
     "SculkVeinBlockMixin",
