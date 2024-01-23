@@ -21,5 +21,7 @@ public class SculkContagioneGamerules {
 
     public static final GameRules.Key<GameRules.IntRule> SCULK_CATALYST_SPAWN_RADIUS = GameRuleRegistry.register("sculkCatalystSpawnRadius", GameRules.Category.MISC, GameRuleFactory.createIntRule(20, 1));
 
+    public static final GameRules.Key<GameRules.IntRule> SCULK_HEAR_RADIUS = GameRuleRegistry.register("sculkHearRadius", GameRules.Category.MISC, GameRuleFactory.createIntRule(4, 1));
+
     public static void initialize() {}
 }

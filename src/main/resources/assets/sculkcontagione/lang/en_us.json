@@ -23,5 +23,7 @@
   "gamerule.sculkCatalystSpawnDelay": "Sculk catalyst spawn delay",
   "gamerule.sculkCatalystSpawnDelay.description": "The amount of delay when spawning Sculk catalysts near non-sculk players.",
   "gamerule.sculkCatalystSpawnRadius": "Sculk catalyst spawn radius",
-  "gamerule.sculkCatalystSpawnRadius.description": "The radius for spawning Sculk catalysts near non-sculk players."
+  "gamerule.sculkCatalystSpawnRadius.description": "The radius for spawning Sculk catalysts near non-sculk players.",
+  "gamerule.sculkHearRadius": "Sculk hear radius",
+  "gamerule.sculkHearRadius.description": "The value for which to multiply the range in which all Sculk mobs/blocks can hear you."
 }
