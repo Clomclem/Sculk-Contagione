@@ -10,7 +10,7 @@ import net.minecraft.world.event.Vibrations;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(targets = "net/minecraft/block/entity/SculkSensorBlockEntity$VibrationCallback")
+@Mixin(targets = {"net/minecraft/block/entity/SculkSensorBlockEntity$VibrationCallback", "net/minecraft/block/entity/CalibratedSculkSensorBlockEntity$Callback", "net/minecraft/block/entity/SculkShriekerBlockEntity$VibrationCallback", "net/minecraft/entity/mob/WardenEntity$VibrationCallback"})
 public abstract class SculkSensorBlockEntityVibrationCallbackMixin implements Vibrations.Callback {
     @ModifyReturnValue(method = "getRange", at = @At("RETURN"))
     private int modifyRange(int original) {

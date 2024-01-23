@@ -26,7 +26,7 @@ public abstract class SculkSensorBlockMixin extends BlockWithEntity implements W
         super(settings);
     }
 
-    @Override
+    /*@Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (player.isSculk() && SculkSensorBlock.isInactive(state)) {
             if (!world.isClient) {
@@ -41,7 +41,7 @@ public abstract class SculkSensorBlockMixin extends BlockWithEntity implements W
         } else {
             return ActionResult.PASS;
         }
-    }
+    }*/
 
     @ModifyExpressionValue(
             method = "onSteppedOn",

@@ -10,13 +10,14 @@ import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.event.GameEvent;
+import net.minecraft.world.event.listener.GameEventListener;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(SculkCatalystBlockEntity.Listener.class)
-public abstract class SculkCatalystBlockEntity$ListenerMixin {
+public abstract class SculkCatalystBlockEntity$ListenerMixin implements GameEventListener {
     @ModifyReturnValue(method = "getRange", at = @At("RETURN"))
     private int modifyRange(int original) {
         return original * 4;
