@@ -1,7 +1,7 @@
 /*
     Code taken from Sculkhunt (https://github.com/Ladysnake/Sculkhunt/blob/main/src/main/java/ladysnake/sculkhunt/mixin/client/PlayerEntityRendererMixin.java),
     licensed under GPLv3.
-    All credits go to doctor4t
+    All credits go to doctor4t, Pyrofab and the Ladysnake team.
  */
 
 package me.clomclem.sculkcontagione.mixin;
@@ -38,10 +38,6 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
     public PlayerEntityRendererMixin(EntityRendererFactory.Context ctx, PlayerEntityModel<AbstractClientPlayerEntity> model, float shadowRadius) {
         super(ctx, model, shadowRadius);
     }
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     * Hand rendering hijack
-     * hijacked from Requiem lmao
-     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     @Shadow
     protected abstract void setModelPose(AbstractClientPlayerEntity abstractClientPlayerEntity_1);

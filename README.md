@@ -14,3 +14,13 @@ This mod was inspired by Sculkhunt & Sculk Horde, and aims to make a vanilla-esq
 - When spreading, Sculk catalysts can convert almost any block into Sculk.
 
 You can configure things like timings and the amount of Sculk that spreads using Gamerules (see [this](src/main/resources/assets/sculkcontagione/lang/en_us.json)).
+
+### License
+
+Most of the code is licensed under the MIT License, see the [license file](LICENSE) for more info.
+
+For the rest, these two specific files:
+[PlayerEntityRendererMixin](src/main/java/me/clomclem/sculkcontagione/mixin/PlayerEntityRendererMixin.java),
+[LivingEntityRendererMixin](src/main/java/me/clomclem/sculkcontagione/mixin/LivingEntityRendererMixin.java)
+
+are licensed by [Ladysnake](https://github.com/Ladysnake) under the GPLv3 license, see the header on both files for more info.

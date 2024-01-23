@@ -1,3 +1,9 @@
+/*
+    Code taken from Sculkhunt (https://github.com/Ladysnake/Sculkhunt/blob/main/src/main/java/ladysnake/sculkhunt/mixin/client/LivingEntityRendererMixin.java),
+    licensed under GPLv3.
+    All credits go to doctor4t, Pyrofab and the Ladysnake team.
+ */
+
 package me.clomclem.sculkcontagione.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
