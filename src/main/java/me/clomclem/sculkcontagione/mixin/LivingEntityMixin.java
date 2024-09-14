@@ -53,7 +53,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, IL
     }
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void onInit(EntityType entityType, World world, CallbackInfo ci) {
+    private void onInit(EntityType<?> entityType, World world, CallbackInfo ci) {
         this.shouldDropLoot = true;
     }
 
