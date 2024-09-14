@@ -1,0 +1,4 @@
+- Mobs 6 Players can now transform into their Sculk versions.
+- Added many new crafting recipes & gamerules.
+- Many new mechanics I'm too lazy to mention.
+- Several bugfixes.
