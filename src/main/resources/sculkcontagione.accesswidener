@@ -5,5 +5,3 @@ accessible    method    net/minecraft/block/BlockWithEntity    validateTicker   
 accessible    method    net/minecraft/block/entity/SculkCatalystBlockEntity$Listener    bloom    (Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/random/Random;)V
 
 accessible    field    net/minecraft/block/entity/SculkCatalystBlockEntity$Listener    state    Lnet/minecraft/block/BlockState;
-
-accessible    method    net/minecraft/entity/effect/StatusEffects    register    (Ljava/lang/String;Lnet/minecraft/entity/effect/StatusEffect;)Lnet/minecraft/registry/entry/RegistryEntry;
