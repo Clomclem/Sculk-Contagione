@@ -42,9 +42,15 @@ jobs:
         uses: Kir-Antipov/mc-publish@v3.3
         with:
           modrinth-id: sculk-contagione
+          modrinth-featured: true
+          modrinth-unfeature-mode: subset
           modrinth-token: "${{env.MODRINTH_TOKEN}}"
 
           github-tag: "v${{env.VERSION}}"
+          github-generate-changelog: true
+          github-draft: false
+          github-prerelease: false
+          github-commitish: 1.20
           github-token: "${{env.GITHUB_TOKEN}}"
 
           name: "${{env.RELEASE_NAME}}"
@@ -54,4 +60,10 @@ jobs:
 
           loaders: fabric
           game-versions: "${{env.MINECRAFT_VERSION}}"
+          dependencies: |
+            fabric@0.97.8+1.20.5(required){modrinth:GCdY4I8I}#(ignore:github)
           java: "${{env.JAVA_VERSION}}"
+
+          retry-attempts: 2
+          retry-delay: 10000
+          fail-mode: fail
