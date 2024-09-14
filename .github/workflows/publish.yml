@@ -41,7 +41,7 @@ jobs:
       - name: Publish (CurseForge/Modrinth/GitHub)
         uses: Kir-Antipov/mc-publish@v3.3
         with:
-          modrinth-id: sculk-contagione
+          modrinth-id: auAlMXJb
           modrinth-featured: true
           modrinth-unfeature-mode: subset
           modrinth-token: "${{env.MODRINTH_TOKEN}}"
@@ -61,7 +61,7 @@ jobs:
           loaders: fabric
           game-versions: "${{env.MINECRAFT_VERSION}}"
           dependencies: |
-            fabric@0.97.8+1.20.5(required){modrinth:GCdY4I8I}#(ignore:github)
+            fabric@0.97.8+1.20.5(required){modrinth:P7dR8mSH}#(ignore:github)
           java: "${{env.JAVA_VERSION}}"
 
           retry-attempts: 2
