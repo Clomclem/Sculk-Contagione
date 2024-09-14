@@ -13,10 +13,12 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -39,7 +41,7 @@ public class SculkContagione implements ModInitializer {
 
 	public static final TagKey<Block> SCULK = TagKey.of(RegistryKeys.BLOCK, new Identifier(ID, "sculk"));
 
-	public static final StatusEffect SCULK_SPORES = new SculkSporesStatusEffect();
+	public static final RegistryEntry<StatusEffect> SCULK_SPORES = Registry.registerReference(Registries.STATUS_EFFECT, new Identifier(ID, "sculk_spores"), new SculkSporesStatusEffect());
 
 	public static List<BlockPos> getNeighbors(BlockPos pos)
 	{
@@ -77,10 +79,9 @@ public class SculkContagione implements ModInitializer {
 		SCULK_BLOCK_ENTITY = Registry.register(
 				Registries.BLOCK_ENTITY_TYPE,
 				new Identifier(ID, "sculk_block_entity"),
-				FabricBlockEntityTypeBuilder.create(SculkBlockEntity::new, Blocks.SCULK).build()
+				BlockEntityType.Builder.create(SculkBlockEntity::new, Blocks.SCULK).build()
 		);
 
-		Registry.register(Registries.STATUS_EFFECT, new Identifier(ID, "sculk_spores"), SCULK_SPORES);
 		SculkContagionePotions.register();
 
 		SculkContagioneGamerules.initialize();

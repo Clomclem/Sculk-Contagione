@@ -24,7 +24,7 @@ public abstract class SculkShriekerBlockMixin extends BlockWithEntity implements
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (player.isSculk()) {
             if (!world.isClient) {
                 world.getBlockEntity(pos, BlockEntityType.SCULK_SHRIEKER).ifPresent(blockEntity -> blockEntity.shriek((ServerWorld) world, (ServerPlayerEntity) player));

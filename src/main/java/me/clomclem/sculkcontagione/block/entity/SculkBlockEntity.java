@@ -10,6 +10,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -78,7 +79,7 @@ public class SculkBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void writeNbt(NbtCompound nbt) {
+    public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         if (previousBlock != null) {
             nbt.put("previous_block", NbtHelper.fromBlockState(previousBlock));
         }
@@ -87,12 +88,12 @@ public class SculkBlockEntity extends BlockEntity {
         }
         nbt.putInt("block_amount", blockAmount);
         nbt.putFloat("counter", counter);
-        super.writeNbt(nbt);
+        super.writeNbt(nbt, registryLookup);
     }
 
     @Override
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
+    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.readNbt(nbt, registryLookup);
 
         if (nbt.contains("previous_block")) {
             DataResult<BlockState> blockStateResult = BlockState.CODEC.parse(NbtOps.INSTANCE, nbt.get("previous_block"));

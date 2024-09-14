@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import me.clomclem.sculkcontagione.world.SculkContagioneGamerules;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -24,7 +25,7 @@ public abstract class SculkSensorBlockEntityVibrationCallbackMixin implements Vi
     }
 
     @ModifyReturnValue(method = "accepts", at = @At("RETURN"))
-    private boolean onAccept(boolean original, ServerWorld world, BlockPos pos, GameEvent event, GameEvent.Emitter emitter) {
+    private boolean onAccept(boolean original, ServerWorld world, BlockPos pos, RegistryEntry<GameEvent> event, GameEvent.Emitter emitter) {
         if (this.world == null) {
             this.world = world;
         }

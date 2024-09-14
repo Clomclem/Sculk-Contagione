@@ -1,11 +1,11 @@
 package me.clomclem.sculkcontagione.potion;
 
 import me.clomclem.sculkcontagione.SculkContagione;
+import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Items;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.Potions;
-import net.minecraft.recipe.BrewingRecipeRegistry;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -18,6 +18,15 @@ public class SculkContagionePotions {
     }
 
     public static void register() {
-        BrewingRecipeRegistry.registerPotionRecipe(Potions.MUNDANE, Items.SCULK_CATALYST, SCULK_SPORES);
+        FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
+            builder.registerPotionRecipe(
+                    // Input potion.
+                    Registries.POTION.getEntry(Potions.MUNDANE.value()), //todo: remove ghast tear from mundane potion, make ghastly potion. no effect.
+                    // Ingredient
+                    Items.SCULK_CATALYST,
+                    // Output potion.
+                    Registries.POTION.getEntry(SCULK_SPORES)
+            );
+        });
     }
 }

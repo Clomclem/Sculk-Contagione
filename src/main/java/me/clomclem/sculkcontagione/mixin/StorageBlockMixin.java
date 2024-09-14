@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class StorageBlockMixin {
 
     @Inject(method = "onUse", at = @At("HEAD"), cancellable = true)
-    private void onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
+    private void onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
         if (player.isSculk()) {
             cir.setReturnValue(ActionResult.PASS);
         }

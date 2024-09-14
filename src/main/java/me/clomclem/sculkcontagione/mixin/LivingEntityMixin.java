@@ -20,6 +20,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -34,12 +35,14 @@ import java.util.function.Predicate;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements Attackable, ILivingEntityAccessor {
 
-    @Shadow public abstract boolean hasStatusEffect(StatusEffect effect);
+    @Shadow public abstract boolean hasStatusEffect(RegistryEntry<StatusEffect> effect);
 
     @Shadow public abstract void disableExperienceDropping();
 
+    @Unique
     private static final TrackedData<Boolean> IS_SCULK = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
+    @Unique
     private static final Predicate<LivingEntity> CAN_ATTACK_PREDICATE = entity -> !entity.isSculk() && !(entity instanceof WardenEntity);
 
     @Unique
@@ -51,8 +54,12 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, IL
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void onInit(EntityType entityType, World world, CallbackInfo ci) {
-        getDataTracker().startTracking(IS_SCULK, false);
         this.shouldDropLoot = true;
+    }
+
+    @Inject(method = "initDataTracker", at = @At("TAIL"))
+    private void onInitDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
+        builder.add(IS_SCULK, false);
     }
 
     @Override

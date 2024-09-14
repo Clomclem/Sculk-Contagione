@@ -17,13 +17,15 @@ public class SculkSporesStatusEffect extends StatusEffect {
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         if (entity instanceof WardenEntity || entity.isSculk()) {
-            return;
+            return false;
         }
         if (!(entity instanceof PlayerEntity player && (player.isCreative() || player.isSpectator()))) {
             entity.kill();
+            return true;
         }
+        return false;
     }
 
 }

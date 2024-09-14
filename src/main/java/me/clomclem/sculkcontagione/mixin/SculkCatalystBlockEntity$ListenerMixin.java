@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.WardenEntity;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -30,7 +31,7 @@ public abstract class SculkCatalystBlockEntity$ListenerMixin implements GameEven
     }
 
     @Inject(method = "listen", at = @At("HEAD"), cancellable = true)
-    private void onDetect(ServerWorld world, GameEvent event, GameEvent.Emitter emitter, Vec3d emitterPos, CallbackInfoReturnable<Boolean> cir) {
+    private void onDetect(ServerWorld world, RegistryEntry<GameEvent> event, GameEvent.Emitter emitter, Vec3d emitterPos, CallbackInfoReturnable<Boolean> cir) {
         if (this.world == null) {
             this.world = world;
         }
@@ -40,7 +41,7 @@ public abstract class SculkCatalystBlockEntity$ListenerMixin implements GameEven
     }
 
     @Inject(method = "listen", at = @At("TAIL"), cancellable = true)
-    private void onListen(ServerWorld world, GameEvent event, GameEvent.Emitter emitter, Vec3d emitterPos, CallbackInfoReturnable<Boolean> cir) {
+    private void onListen(ServerWorld world, RegistryEntry<GameEvent> event, GameEvent.Emitter emitter, Vec3d emitterPos, CallbackInfoReturnable<Boolean> cir) {
         if (event == GameEvent.STEP) {
             Entity i = emitter.sourceEntity();
             if (i instanceof LivingEntity livingEntity && !(livingEntity instanceof WardenEntity || livingEntity.isSculk())) {
