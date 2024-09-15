@@ -50,7 +50,6 @@ jobs:
           github-generate-changelog: true
           github-draft: false
           github-prerelease: false
-          github-commitish: 1.20
           github-token: "${{env.GITHUB_TOKEN}}"
 
           name: "${{env.RELEASE_NAME}}"
