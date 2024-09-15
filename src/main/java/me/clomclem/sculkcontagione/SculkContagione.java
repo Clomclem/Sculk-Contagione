@@ -33,13 +33,13 @@ public class SculkContagione implements ModInitializer {
 
 	public static BlockEntityType<SculkBlockEntity> SCULK_BLOCK_ENTITY;
 
-	public static final RegistryKey<DamageType> SCULK_ATTRITION = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(ID, "sculk_attrition"));
+	public static final RegistryKey<DamageType> SCULK_ATTRITION = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of(ID, "sculk_attrition"));
 
-	public static final TagKey<Block> NON_SCULK_REPLACEABLE = TagKey.of(RegistryKeys.BLOCK, new Identifier(ID, "non_sculk_replaceable"));
+	public static final TagKey<Block> NON_SCULK_REPLACEABLE = TagKey.of(RegistryKeys.BLOCK, Identifier.of(ID, "non_sculk_replaceable"));
 
-	public static final TagKey<Block> SCULK = TagKey.of(RegistryKeys.BLOCK, new Identifier(ID, "sculk"));
+	public static final TagKey<Block> SCULK = TagKey.of(RegistryKeys.BLOCK, Identifier.of(ID, "sculk"));
 
-	public static final RegistryEntry<StatusEffect> SCULK_SPORES = Registry.registerReference(Registries.STATUS_EFFECT, new Identifier(ID, "sculk_spores"), new SculkSporesStatusEffect());
+	public static final RegistryEntry<StatusEffect> SCULK_SPORES = Registry.registerReference(Registries.STATUS_EFFECT, Identifier.of(ID, "sculk_spores"), new SculkSporesStatusEffect());
 
 	public static List<BlockPos> getNeighbors(BlockPos pos)
 	{
@@ -76,7 +76,7 @@ public class SculkContagione implements ModInitializer {
 	public void onInitialize() {
 		SCULK_BLOCK_ENTITY = Registry.register(
 				Registries.BLOCK_ENTITY_TYPE,
-				new Identifier(ID, "sculk_block_entity"),
+				Identifier.of(ID, "sculk_block_entity"),
 				BlockEntityType.Builder.create(SculkBlockEntity::new, Blocks.SCULK).build()
 		);
 

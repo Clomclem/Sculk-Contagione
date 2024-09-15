@@ -14,7 +14,7 @@ public class SculkContagionePotions {
     public static final Potion SCULK_SPORES = register("sculk_spores", new Potion(new StatusEffectInstance(SculkContagione.SCULK_SPORES, 1200)));
 
     public static Potion register(String name, Potion potion) {
-        return Registry.register(Registries.POTION, new Identifier(SculkContagione.ID, name), potion);
+        return Registry.register(Registries.POTION, Identifier.of(SculkContagione.ID, name), potion);
     }
 
     public static void register() {

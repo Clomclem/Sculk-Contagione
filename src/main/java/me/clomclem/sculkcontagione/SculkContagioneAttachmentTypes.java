@@ -13,5 +13,5 @@ public class SculkContagioneAttachmentTypes {
     public static final AttachmentType<List<BlockPos>> WORLD_CATALYST_LIST = AttachmentRegistry.<List<BlockPos>>builder()
             .persistent(Codec.list(BlockPos.CODEC))
             .initializer(ArrayList::new)
-            .buildAndRegister(new Identifier(SculkContagione.ID, "world_catalyst_list"));
+            .buildAndRegister(Identifier.of(SculkContagione.ID, "world_catalyst_list"));
 }

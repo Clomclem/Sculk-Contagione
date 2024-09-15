@@ -19,6 +19,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(SculkCatalystBlockEntity.class)
@@ -40,25 +41,27 @@ public abstract class SculkCatalystBlockEntityMixin extends BlockEntity implemen
     @Override
     public void setWorld(World world) {
         super.setWorld(world);
-        ((AttachmentTarget) world).getAttachedOrCreate(SculkContagioneAttachmentTypes.WORLD_CATALYST_LIST).add(pos);
+        List<BlockPos> list = new ArrayList<>(((AttachmentTarget) world).getAttachedOrCreate(SculkContagioneAttachmentTypes.WORLD_CATALYST_LIST));
+        list.add(pos);
+        ((AttachmentTarget) world).setAttached(SculkContagioneAttachmentTypes.WORLD_CATALYST_LIST, list);
     }
 
     @Override
     public void markRemoved() {
         super.markRemoved();
-        List<BlockPos> blockPosList = ((AttachmentTarget) getWorld()).getAttachedOrCreate(SculkContagioneAttachmentTypes.WORLD_CATALYST_LIST);
-        if (blockPosList.contains(pos)) {
-            blockPosList.remove(pos);
-        }
+        List<BlockPos> blockPosList = new ArrayList<>(((AttachmentTarget) getWorld()).getAttachedOrCreate(SculkContagioneAttachmentTypes.WORLD_CATALYST_LIST));
+        blockPosList.remove(pos);
+        ((AttachmentTarget) world).setAttached(SculkContagioneAttachmentTypes.WORLD_CATALYST_LIST, blockPosList);
     }
 
     @Override
     public void cancelRemoval() {
         super.cancelRemoval();
-        List<BlockPos> blockPosList = ((AttachmentTarget) getWorld()).getAttachedOrCreate(SculkContagioneAttachmentTypes.WORLD_CATALYST_LIST);
+        List<BlockPos> blockPosList = new ArrayList<>(((AttachmentTarget) getWorld()).getAttachedOrCreate(SculkContagioneAttachmentTypes.WORLD_CATALYST_LIST));
         if (!blockPosList.contains(pos)) {
             blockPosList.add(pos);
         }
+        ((AttachmentTarget) world).setAttached(SculkContagioneAttachmentTypes.WORLD_CATALYST_LIST, blockPosList);
     }
 
     @Inject(method = "tick", at = @At("HEAD"))

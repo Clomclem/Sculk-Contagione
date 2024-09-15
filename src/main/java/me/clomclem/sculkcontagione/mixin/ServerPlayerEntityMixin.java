@@ -92,7 +92,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
             }
 
             if (!this.isSpectator()) {
-                this.drop(damageSource);
+                this.drop(getServerWorld(), damageSource);
             }
 
             this.getScoreboard().forEachScore(ScoreboardCriterion.DEATH_COUNT, this, ScoreAccess::incrementScore);
@@ -115,11 +115,11 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
             Random rand = this.getRandom();
             if (closestCatalyst != null) {
                 Vec3d pos = closestCatalyst.add(rand.nextBetween(-1, 1), rand.nextBetween(0, 1), rand.nextBetween(-1, 1)).toCenterPos();
-                this.teleport(pos.x, pos.y, pos.z);
+                this.teleport(pos.x, pos.y, pos.z, false);
             } else {
                 BlockPos spawnPos = getServerWorld().getSpawnPos().add(rand.nextBetween(-1, 1), rand.nextBetween(0, 1), rand.nextBetween(-1, 1));
                 Vec3d pos = spawnPos.toCenterPos();
-                this.teleport(pos.x, pos.y, pos.z);
+                this.teleport(pos.x, pos.y, pos.z, false);
                 if (this.getServerWorld().getBlockState(spawnPos).getBlock() != Blocks.SCULK_CATALYST) {
                     this.getServerWorld().setBlockState(spawnPos, Blocks.SCULK_CATALYST.getDefaultState());
                 }

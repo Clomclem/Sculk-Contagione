@@ -48,7 +48,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
                     textureSize = "128x64";
                 }
 
-                this.texture = new Identifier(SculkContagione.ID, "textures/entity/sculk_" + textureSize + ".png");
+                this.texture = Identifier.of(SculkContagione.ID, "textures/entity/sculk_" + textureSize + ".png");
             }
 
             return this.texture;
