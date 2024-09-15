@@ -43,7 +43,7 @@ jobs:
         with:
           modrinth-id: auAlMXJb
           modrinth-featured: true
-          modrinth-unfeature-mode: subset
+          modrinth-unfeature-mode: none
           modrinth-token: "${{env.MODRINTH_TOKEN}}"
 
           github-tag: "v${{env.VERSION}}"
